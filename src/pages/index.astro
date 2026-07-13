@@ -1,17 +1,236 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 
+const equipment = [
+  {
+    image: '/images/radar-installed.jpg',
+    alt: 'Радарный уровнемер УЛМ-11 на резервуаре',
+    kicker: 'Жидкие продукты',
+    title: 'Радарные уровнемеры УЛМ-11',
+    description: 'Для резервуаров различных конструкций, включая измерения в направляющих трубах резервуаров с понтоном или плавающей крышей.',
+    meta: ['Точность ±3 мм', 'Взрывозащита', '2 модели'],
+  },
+  {
+    image: '/images/ulmradar-4-flange.jpg',
+    alt: 'Радарный уровнемер ULMRADAR-4',
+    kicker: 'Высокая точность',
+    title: 'ULMRADAR-4',
+    description: 'Для резервуаров с фиксированной крышей, в том числе для тяжёлых и вязких продуктов.',
+    meta: ['Точность ±1–4 мм', 'Взрывозащита'],
+  },
+  {
+    image: '/images/ulmradar-4.jpg',
+    alt: 'Промышленный радарный уровнемер',
+    kicker: 'Общепромышленное',
+    title: 'Уровнемеры УЛМ-31',
+    description: 'Бесконтактное измерение уровня в общепромышленном исполнении IP65.',
+    meta: ['Точность ±1–5 мм', 'IP65'],
+  },
+  {
+    image: '/images/ulm-11.jpg',
+    alt: 'Радарный уровнемер на фланце резервуара',
+    kicker: 'Сыпучие материалы',
+    title: 'Уровнемеры УЛМ-3D',
+    description: 'Многолучевое измерение среднего уровня в бункерах, силосах, складах и хранилищах.',
+    meta: ['Точность ±5 мм', '2 модели'],
+  },
+];
+
+const services = [
+  ['Внедрение измерительных систем', 'Шеф-монтаж, настройка, поверка, ввод в эксплуатацию и дальнейшее сервисное обслуживание.'],
+  ['Лабораторный контроль', 'Разрушающий и неразрушающий контроль, ВИК, РК, УЗК, ПВК, ПВТ, МК и РФА.'],
+  ['Монтаж КИП и электромонтаж', 'Монтаж оборудования, электрических сетей и взрывозащищённого оборудования.'],
+  ['Промышленное строительство', 'Монтаж трубопроводов, металлоконструкций, технологического оборудования и резервуаров.'],
+  ['Ремонт и реконструкция', 'Комплексные работы на объектах топливно-энергетического комплекса под ключ.'],
+  ['Техническое обслуживание', 'Поддержка систем TRL/2, Raptor и RTG, ремонт ГПМ, котлов и гидравлических установок.'],
+];
+
+const advantages = [
+  ['Официальный дилер АО «Лимако»', 'Подлинное оборудование, техническая поддержка производителя и предсказуемые сроки поставки.'],
+  ['Всё из одних рук', 'От подбора оборудования по ТЗ до монтажа, поверки, запуска и постгарантийного обслуживания.'],
+  ['Экспертные компетенции', 'Многолетний опыт работы с радарными и ультразвуковыми измерительными системами.'],
+  ['Собственная лаборатория', 'Независимые испытания и контроль качества материалов, сварных соединений и конструкций.'],
+  ['Готовность к полевым работам', 'Аттестованный персонал, поверенное оборудование, собственная техника и отработанные технологии.'],
+];
+
+const projects = [
+  'ПАО «Транснефть» — более 700 резервуаров',
+  'Туркменбашинский комплекс НПЗ — более 280 резервуаров',
+  'АО «Ангарская нефтехимическая компания» — более 160 резервуаров',
+  'ПАО «Саратовский НПЗ» — более 60 резервуаров',
+  'ЗАО «Таманьнефтегаз» — 48 РГС с СУГ и более 20 РВС/РВСП',
+  'РН-Туапсинский НПЗ — ремонт и обслуживание оборудования',
+];
+
+const clients = [
+  ['/images/client-rosneft.png', 'Роснефть'],
+  ['/images/client-transneft.png', 'Транснефть'],
+  ['/images/client-lukoil.png', 'Лукойл'],
+  ['/images/client-novatek.jpg', 'НОВАТЭК'],
+  ['/images/client-gazprom.jpg', 'Газпром нефть'],
+  ['/images/client-kaztransoil.jpg', 'КазТрансОйл'],
+];
+
+const yandexFormUrl = import.meta.env.PUBLIC_YANDEX_FORM_URL;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Комбит Про — поставка и внедрение измерительного оборудования, промышленный сервис, строительство и лабораторный контроль." />
+    <meta name="theme-color" content="#071827" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Комбит Про — промышленные решения и измерительное оборудование</title>
+  </head>
+  <body id="top">
+    <Header />
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Инжиниринг · Оборудование · Сервис</p>
+            <h1 id="hero-title">Точность в измерениях.<br /><span>Надёжность в работе.</span></h1>
+            <p class="hero-description">Оснащаем и обслуживаем промышленные предприятия: от поставки КИП до строительства и реконструкции технологических объектов.</p>
+            <div class="hero-actions">
+              <a class="button" href="#contacts">Обсудить задачу <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 15 10-10m0 0H7m8 0v8" stroke="currentColor" stroke-width="1.8" /></svg></a>
+              <a class="button button-outline" href="#equipment">Смотреть оборудование</a>
+            </div>
+          </div>
+          <div class="hero-facts" aria-label="Ключевые показатели">
+            <div class="hero-fact"><strong>2500+</strong><span>оснащённых резервуаров</span></div>
+            <div class="hero-fact"><strong>15 лет</strong><span>реализуем проекты</span></div>
+            <div class="hero-fact"><strong>360°</strong><span>полный цикл работ</span></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="dealer-strip" aria-label="Официальный статус">
+        <div class="container dealer-inner">
+          <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true">✓</span><div><strong>Официальный дилер АО «Лимако»</strong><span>Ведущий российский производитель бесконтактных радарных уровнемеров</span></div></div>
+          <span class="dealer-label">Российское оборудование</span>
+        </div>
+      </aside>
+
+      <section class="section" id="about">
+        <div class="container about-grid">
+          <div class="about-visual">
+            <img src="/images/industries.jpg" alt="Промышленные объекты: резервуарные парки, НПЗ, терминалы и элеваторы" loading="lazy" />
+            <div class="about-stamp"><strong>1991</strong><span>экспертиза команды в радарных системах</span></div>
+          </div>
+          <div class="about-copy">
+            <p class="eyebrow">О компании</p>
+            <h2 class="section-title">Комплексный партнёр промышленного предприятия</h2>
+            <p>ООО «Комбит Про» специализируется на оснащении контрольно-измерительным оборудованием, сервисном обслуживании, ремонте и капитальном строительстве технологических установок и резервуарных парков.</p>
+            <ul class="industry-list">
+              <li>Нефтехранилища и нефтебазы</li><li>Нефтеперерабатывающие заводы</li><li>Портовые терминалы</li><li>Химические предприятия</li><li>Элеваторы и зернохранилища</li><li>Бункеры и склады сырья</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="equipment">
+        <div class="container">
+          <div class="equipment-header"><div><p class="eyebrow">Мы предлагаем</p><h2 class="section-title">Измерительное оборудование</h2></div><p class="section-lead">Подбираем решение по техническому заданию и сопровождаем оборудование на всём жизненном цикле.</p></div>
+          <div class="equipment-grid">
+            {equipment.map((item) => (
+              <article class="product-card">
+                <div class="product-image"><img src={item.image} alt={item.alt} loading="lazy" /></div>
+                <div class="product-body"><span class="product-kicker">{item.kicker}</span><h3>{item.title}</h3><p>{item.description}</p><div class="product-meta">{item.meta.map((label) => <span>{label}</span>)}</div></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="section services-section" id="services">
+        <div class="container">
+          <div class="services-header"><div><p class="eyebrow">Инженерные услуги</p><h2 class="section-title">От проекта до стабильной эксплуатации</h2></div><p class="section-lead">Берём ответственность за результат на каждом этапе — от обследования объекта до сервисной поддержки.</p></div>
+          <div class="services-grid">
+            {services.map(([title, description], index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container advantages">
+          <div class="advantages-aside"><p class="eyebrow">Почему мы</p><h2 class="section-title">Ресурсы и компетенции для сложных задач</h2><p class="section-lead">Индивидуальный подход без потери промышленной дисциплины.</p></div>
+          <div class="advantage-list">{advantages.map(([title, description]) => <article class="advantage-item"><div><h3>{title}</h3><p>{description}</p></div></article>)}</div>
+        </div>
+      </section>
+
+      <section class="section projects-section" id="projects">
+        <div class="container">
+          <div class="project-intro"><div><p class="eyebrow">Опыт в цифрах</p><h2 class="section-title">Результаты, измеренные на реальных объектах</h2></div><p>Компания участвует в проектах нефтегазового сектора России и СНГ — от единичного внедрения прибора до комплексного оснащения резервуарного парка.</p></div>
+          <div class="stats-grid">
+            <div class="stat-card"><strong>2500<span>+</span></strong><p>резервуаров оснащено системами измерения массы и радарными уровнемерами</p></div>
+            <div class="stat-card"><strong>500<span>+</span></strong><p>ультразвуковых расходомеров поставлено и введено в эксплуатацию</p></div>
+            <div class="stat-card"><strong>15</strong><p>лет системной работы на объектах нефтегазовой и смежных отраслей</p></div>
+          </div>
+          <div class="project-list">{projects.map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><p>{project}</p></div>)}</div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="clients-title">
+        <div class="container">
+          <div class="clients-header"><div><p class="eyebrow">Заказчики</p><h2 class="section-title" id="clients-title">Нам доверяют лидеры отрасли</h2></div><p>Среди заказчиков — крупнейшие нефтяные компании России и СНГ.</p></div>
+          <div class="client-grid">{clients.map(([src, alt]) => <div class="client-logo"><img src={src} alt={alt} loading="lazy" /></div>)}</div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contacts">
+        <div class="container contact-grid">
+          <div class="contact-copy">
+            <p class="eyebrow">Связаться с нами</p><h2 class="section-title">Обсудим вашу производственную задачу</h2><p>Отправьте вводные — специалисты уточнят детали и предложат следующий шаг.</p>
+            <div class="contact-details">
+              <div class="contact-detail"><span>Телефон</span><a href="tel:+74999224010">+7 (499) 922-40-10</a></div>
+              <div class="contact-detail"><span>Почта</span><a href="mailto:info@kombit.ru">info@kombit.ru</a></div>
+              <div class="contact-detail"><span>Адрес</span><address>121087, Москва, Багратионовский проезд, дом 7, корпус 20В</address></div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap">
+            {yandexFormUrl ? (
+              <><h3>Оставить заявку</h3><p>Заполните форму — мы свяжемся с вами.</p><iframe class="external-form" src={yandexFormUrl} title="Форма обратной связи Комбит Про" loading="lazy"></iframe></>
+            ) : (
+              <>
+                <h3>Оставить заявку</h3><p>Заполните поля — письмо будет подготовлено в вашей почтовой программе.</p>
+                <form class="contact-form" id="contact-form">
+                  <div class="form-field"><label for="name">Ваше имя *</label><input id="name" name="name" autocomplete="name" required /></div>
+                  <div class="form-field"><label for="company">Компания</label><input id="company" name="company" autocomplete="organization" /></div>
+                  <div class="form-field form-field-full"><label for="contact">Телефон или e-mail *</label><input id="contact" name="contact" autocomplete="email" required /></div>
+                  <div class="form-field form-field-full"><label for="message">Кратко о задаче</label><textarea id="message" name="message"></textarea></div>
+                  <label class="form-consent"><input type="checkbox" required /><span>Я согласен на обработку переданных данных для ответа на обращение.</span></label>
+                  <div class="form-footer"><button class="button" type="submit">Подготовить письмо</button><p class="form-status" id="form-status" aria-live="polite">Отправка через сайт будет подключена после настройки Яндекс Формы.</p></div>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+        <div class="map-wrap"><iframe src="https://yandex.ru/map-widget/v1/?ll=37.507599%2C55.743124&mode=search&oid=93740059845&ol=biz&z=14.8" title="Комбит Про на Яндекс Картах" loading="lazy"></iframe></div>
+      </section>
+    </main>
+
+    <Footer />
+
+    {!yandexFormUrl && (
+      <script>
+        const form = document.querySelector<HTMLFormElement>('#contact-form');
+        form?.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const data = new FormData(form);
+          const subject = encodeURIComponent(`Заявка с сайта — ${data.get('company') || data.get('name')}`);
+          const body = encodeURIComponent([`Имя: ${data.get('name')}`, `Компания: ${data.get('company') || 'не указана'}`, `Контакт: ${data.get('contact')}`, '', `Задача: ${data.get('message') || 'не указана'}`].join('\n'));
+          const status = document.querySelector('#form-status');
+          if (status) status.textContent = 'Открываем почтовую программу…';
+          window.location.href = `mailto:info@kombit.ru?subject=${subject}&body=${body}`;
+        });
+      </script>
+    )}
+  </body>
 </html>
