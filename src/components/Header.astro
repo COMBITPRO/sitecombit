@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 const navigation = [
   { href: '#about', label: 'О компании' },
   { href: '#equipment', label: 'Оборудование' },
@@ -11,15 +13,7 @@ const navigation = [
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="Комбит Про — на главную">
-      <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
-        <path d="M5 7h14v7H12v16h7v7H5V7Z" />
-        <path d="M39 7H25v7h7v16h-7v7h14V7Z" />
-        <path d="M18 18h8v8h-8z" />
-      </svg>
-      <span class="brand-copy">
-        <strong>КОМБИТ ПРО</strong>
-        <small>Промышленные решения</small>
-      </span>
+      <Logo />
     </a>
 
     <nav class="desktop-nav" aria-label="Основная навигация">
