@@ -1,0 +1,219 @@
+media:
+  input: public/images
+  output: /images
+
+settings:
+  content:
+    merge: true
+
+content:
+  - name: site
+    label: Содержимое сайта
+    type: file
+    path: src/content/site.json
+    format: json
+    fields:
+      - name: seo
+        label: Поисковая выдача
+        type: object
+        fields:
+          - { name: title, label: Заголовок страницы, type: string, required: true }
+          - { name: description, label: Описание страницы, type: text, required: true }
+
+      - name: navigation
+        label: Меню
+        type: object
+        list: { min: 5, max: 5 }
+        fields:
+          - { name: label, label: Название, type: string, required: true }
+          - { name: href, label: Ссылка, type: string, required: true, readonly: true }
+
+      - name: contact
+        label: Контактные данные
+        type: object
+        fields:
+          - { name: phone, label: Телефон, type: string, required: true }
+          - { name: email, label: Электронная почта, type: string, required: true }
+          - { name: address, label: Адрес, type: text, required: true }
+          - { name: headerCta, label: Подпись под телефоном, type: string, required: true }
+
+      - name: hero
+        label: Первый экран
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок — первая строка, type: string, required: true }
+          - { name: accentTitle, label: Заголовок — акцентная строка, type: string, required: true }
+          - { name: description, label: Описание, type: text, required: true }
+          - { name: primaryButton, label: Основная кнопка, type: string, required: true }
+          - { name: secondaryButton, label: Дополнительная кнопка, type: string, required: true }
+          - name: facts
+            label: Показатели
+            type: object
+            list:
+              min: 3
+              max: 3
+              collapsible: { collapsed: false, summary: "{value} — {label}" }
+            fields:
+              - { name: value, label: Значение, type: string, required: true }
+              - { name: label, label: Подпись, type: string, required: true }
+
+      - name: dealer
+        label: Статус дилера
+        type: object
+        fields:
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: description, label: Описание, type: string, required: true }
+          - { name: label, label: Метка справа, type: string, required: true }
+
+      - name: about
+        label: О компании
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: description, label: Описание, type: text, required: true }
+          - { name: image, label: Изображение, type: image, required: true }
+          - { name: imageAlt, label: Описание изображения, type: string, required: true }
+          - { name: stampValue, label: Число на плашке, type: string, required: true }
+          - { name: stampText, label: Текст на плашке, type: string, required: true }
+          - { name: industries, label: Отрасли, type: string, list: { min: 6, max: 6 }, required: true }
+
+      - name: equipment
+        label: Оборудование
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: items
+            label: Карточки оборудования
+            type: object
+            list:
+              min: 4
+              max: 4
+              collapsible: { collapsed: true, summary: "{title}" }
+            fields:
+              - { name: image, label: Изображение, type: image, required: true }
+              - { name: alt, label: Описание изображения, type: string, required: true }
+              - { name: kicker, label: Категория, type: string, required: true }
+              - { name: title, label: Название, type: string, required: true }
+              - { name: description, label: Описание, type: text, required: true }
+              - { name: meta, label: Характеристики, type: string, list: { min: 1, max: 4 }, required: true }
+
+      - name: services
+        label: Услуги
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: items
+            label: Список услуг
+            type: object
+            list:
+              min: 6
+              max: 6
+              collapsible: { collapsed: true, summary: "{title}" }
+            fields:
+              - { name: title, label: Название, type: string, required: true }
+              - { name: description, label: Описание, type: text, required: true }
+
+      - name: advantages
+        label: Преимущества
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: items
+            label: Список преимуществ
+            type: object
+            list:
+              min: 5
+              max: 5
+              collapsible: { collapsed: true, summary: "{title}" }
+            fields:
+              - { name: title, label: Название, type: string, required: true }
+              - { name: description, label: Описание, type: text, required: true }
+
+      - name: projects
+        label: Проекты и показатели
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: stats
+            label: Показатели
+            type: object
+            list:
+              min: 3
+              max: 3
+              collapsible: { collapsed: true, summary: "{value}{suffix}" }
+            fields:
+              - { name: value, label: Значение, type: string, required: true }
+              - { name: suffix, label: Суффикс, type: string }
+              - { name: description, label: Описание, type: text, required: true }
+          - { name: items, label: Реализованные проекты, type: string, list: { min: 6, max: 6 }, required: true }
+
+      - name: clients
+        label: Заказчики
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: items
+            label: Логотипы заказчиков
+            type: object
+            list:
+              min: 6
+              max: 6
+              collapsible: { collapsed: true, summary: "{alt}" }
+            fields:
+              - { name: image, label: Логотип, type: image, required: true }
+              - { name: alt, label: Название компании, type: string, required: true }
+
+      - name: contactSection
+        label: Форма связи
+        type: object
+        fields:
+          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
+          - { name: title, label: Заголовок, type: string, required: true }
+          - { name: lead, label: Вводный текст, type: text, required: true }
+          - name: form
+            label: Тексты формы
+            type: object
+            fields:
+              - { name: title, label: Заголовок, type: string, required: true }
+              - { name: lead, label: Описание, type: string, required: true }
+              - { name: nameLabel, label: Поле имени, type: string, required: true }
+              - { name: companyLabel, label: Поле компании, type: string, required: true }
+              - { name: contactLabel, label: Поле контакта, type: string, required: true }
+              - { name: messageLabel, label: Поле задачи, type: string, required: true }
+              - { name: consent, label: Согласие, type: text, required: true }
+              - { name: button, label: Кнопка, type: string, required: true }
+              - { name: sending, label: Кнопка при отправке, type: string, required: true }
+              - { name: ready, label: Подпись готовой формы, type: string, required: true }
+              - { name: unavailable, label: Форма не настроена, type: string, required: true }
+              - { name: pending, label: Статус отправки, type: string, required: true }
+              - { name: success, label: Успешная отправка, type: string, required: true }
+              - { name: error, label: Ошибка отправки, type: string, required: true }
+
+      - name: footer
+        label: Подвал
+        type: object
+        fields:
+          - { name: description, label: Описание компании, type: text, required: true }
+          - { name: sectionsTitle, label: Заголовок разделов, type: string, required: true }
+          - { name: contactsTitle, label: Заголовок контактов, type: string, required: true }
+          - name: links
+            label: Ссылки
+            type: object
+            list: { min: 3, max: 3 }
+            fields:
+              - { name: label, label: Название, type: string, required: true }
+              - { name: href, label: Ссылка, type: string, required: true, readonly: true }
+          - { name: copyright, label: Правообладатель, type: string, required: true }
+          - { name: disclaimer, label: Примечание, type: string, required: true }

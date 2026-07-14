@@ -1,13 +1,8 @@
 ---
 import Logo from './Logo.astro';
+import site from '../content/site.json';
 
-const navigation = [
-  { href: '#about', label: 'О компании' },
-  { href: '#equipment', label: 'Оборудование' },
-  { href: '#services', label: 'Услуги' },
-  { href: '#projects', label: 'Проекты' },
-  { href: '#contacts', label: 'Контакты' },
-];
+const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 ---
 
 <header class="site-header">
@@ -17,19 +12,19 @@ const navigation = [
     </a>
 
     <nav class="desktop-nav" aria-label="Основная навигация">
-      {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
 
-    <a class="header-phone" href="tel:+74999224010">
-      <span>+7 (499) 922-40-10</span>
-      <small>Связаться с нами</small>
+    <a class="header-phone" href={`tel:${phoneHref}`}>
+      <span>{site.contact.phone}</span>
+      <small>{site.contact.headerCta}</small>
     </a>
 
     <details class="mobile-menu">
       <summary aria-label="Открыть меню"><span></span><span></span><span></span></summary>
       <nav aria-label="Мобильная навигация">
-        {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
-        <a href="tel:+74999224010">+7 (499) 922-40-10</a>
+        {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       </nav>
     </details>
   </div>

@@ -1,5 +1,8 @@
 ---
 import Logo from './Logo.astro';
+import site from '../content/site.json';
+
+const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 ---
 
 <footer class="site-footer">
@@ -8,23 +11,21 @@ import Logo from './Logo.astro';
       <a class="brand brand-footer" href="#top" aria-label="Комбит Про — наверх">
         <Logo />
       </a>
-      <p>Комплексное оснащение, реконструкция и сервисное обслуживание промышленных предприятий.</p>
+      <p>{site.footer.description}</p>
     </div>
     <div class="footer-links">
-      <strong>Разделы</strong>
-      <a href="#equipment">Оборудование</a>
-      <a href="#services">Услуги</a>
-      <a href="#projects">Реализованные проекты</a>
+      <strong>{site.footer.sectionsTitle}</strong>
+      {site.footer.links.map((item) => <a href={item.href}>{item.label}</a>)}
     </div>
     <div class="footer-links">
-      <strong>Контакты</strong>
-      <a href="tel:+74999224010">+7 (499) 922-40-10</a>
-      <a href="mailto:info@kombit.ru">info@kombit.ru</a>
-      <span>Москва, Багратионовский пр-д, 7, корп. 20В</span>
+      <strong>{site.footer.contactsTitle}</strong>
+      <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+      <span>{site.contact.address}</span>
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>© {new Date().getFullYear()} ООО «Комбит Про»</span>
-    <span>Информация на сайте не является публичной офертой</span>
+    <span>© {new Date().getFullYear()} {site.footer.copyright}</span>
+    <span>{site.footer.disclaimer}</span>
   </div>
 </footer>
