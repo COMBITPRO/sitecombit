@@ -86,20 +86,44 @@ content:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
           - { name: lead, label: Вводный текст, type: text, required: true }
-          - name: items
-            label: Карточки оборудования
+          - name: groups
+            label: Группы оборудования
             type: object
             list:
               min: 4
               max: 4
-              collapsible: { collapsed: true, summary: "{title}" }
+              collapsible: { collapsed: true, summary: "{label}" }
             fields:
-              - { name: image, label: Изображение, type: image, required: true }
-              - { name: alt, label: Описание изображения, type: string, required: true }
-              - { name: kicker, label: Категория, type: string, required: true }
-              - { name: title, label: Название, type: string, required: true }
-              - { name: description, label: Описание, type: text, required: true }
-              - { name: meta, label: Характеристики, type: string, list: { min: 1, max: 4 }, required: true }
+              - { name: id, label: Технический идентификатор, type: string, required: true, readonly: true }
+              - { name: label, label: Название вкладки, type: string, required: true }
+              - { name: summary, label: Описание группы, type: text, required: true }
+              - name: models
+                label: Модели
+                type: object
+                list:
+                  min: 1
+                  max: 2
+                  collapsible: { collapsed: true, summary: "{title}" }
+                fields:
+                  - { name: image, label: Изображение, type: image, required: true }
+                  - { name: alt, label: Описание изображения, type: string, required: true }
+                  - { name: kicker, label: Категория, type: string, required: true }
+                  - { name: title, label: Название, type: string, required: true }
+                  - { name: description, label: Описание, type: text, required: true }
+                  - { name: specs, label: Характеристики, type: string, list: { min: 1, max: 6 }, required: true }
+                  - name: files
+                    label: Документы
+                    type: object
+                    list:
+                      min: 0
+                      max: 3
+                      collapsible: { collapsed: true, summary: "{label}" }
+                    fields:
+                      - { name: label, label: Название, type: string, required: true }
+                      - { name: href, label: Путь к файлу, type: string, required: true, readonly: true }
+                      - { name: format, label: Формат, type: string, required: true, readonly: true }
+          - { name: additionalTitle, label: Заголовок дополнительных решений, type: string, required: true }
+          - { name: additionalItems, label: Дополнительные решения, type: string, list: { min: 3, max: 3 }, required: true }
 
       - name: services
         label: Услуги

@@ -67,13 +67,73 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
       <section class="section section-muted" id="equipment">
         <div class="container">
           <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title">{site.equipment.title}</h2></div><p class="section-lead">{site.equipment.lead}</p></div>
-          <div class="equipment-grid">
-            {site.equipment.items.map((item) => (
-              <article class="product-card">
-                <div class="product-image"><img src={item.image} alt={item.alt} loading="lazy" /></div>
-                <div class="product-body"><span class="product-kicker">{item.kicker}</span><h3>{item.title}</h3><p>{item.description}</p><div class="product-meta">{item.meta.map((label) => <span>{label}</span>)}</div></div>
-              </article>
+
+          <div class="equipment-tabs" role="tablist" aria-label="Группы измерительного оборудования">
+            {site.equipment.groups.map((group, index) => (
+              <button
+                id={`equipment-tab-${group.id}`}
+                class="equipment-tab"
+                type="button"
+                role="tab"
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`equipment-panel-${group.id}`}
+                tabindex={index === 0 ? 0 : -1}
+                data-equipment-tab={group.id}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {group.label}
+              </button>
             ))}
+          </div>
+
+          <div class="equipment-panels">
+            {site.equipment.groups.map((group, index) => (
+              <section
+                id={`equipment-panel-${group.id}`}
+                class="equipment-panel"
+                role="tabpanel"
+                aria-labelledby={`equipment-tab-${group.id}`}
+                hidden={index !== 0}
+                data-equipment-panel={group.id}
+              >
+                <p class="equipment-summary">{group.summary}</p>
+                <div class:list={['equipment-models', { 'is-single': group.models.length === 1 }]}>
+                  {group.models.map((model) => (
+                    <article class="equipment-model">
+                      <div class="equipment-model-image">
+                        <img src={model.image} alt={model.alt} loading="lazy" />
+                      </div>
+                      <div class="equipment-model-content">
+                        <span class="product-kicker">{model.kicker}</span>
+                        <h3>{model.title}</h3>
+                        <p class="equipment-model-description">{model.description}</p>
+                        <ul class="equipment-specs">
+                          {model.specs.map((spec) => <li>{spec}</li>)}
+                        </ul>
+                        {model.files.length > 0 && (
+                          <div class="equipment-files" aria-label={`Файлы для ${model.title}`}>
+                            {model.files.map((file) => (
+                              <a href={file.href} download>
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14" />
+                                </svg>
+                                <span>{file.label}</span>
+                                <small>{file.format}</small>
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <div class="equipment-additional">
+            <h3>{site.equipment.additionalTitle}</h3>
+            <ul>{site.equipment.additionalItems.map((item) => <li>{item}</li>)}</ul>
           </div>
         </div>
       </section>
@@ -151,6 +211,41 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
     <Footer />
 
     <script>
+      const equipmentTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-equipment-tab]'));
+      const equipmentPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-equipment-panel]'));
+
+      const activateEquipmentTab = (tab: HTMLButtonElement) => {
+        const selectedId = tab.dataset.equipmentTab;
+
+        equipmentTabs.forEach((item) => {
+          const isSelected = item === tab;
+          item.setAttribute('aria-selected', String(isSelected));
+          item.tabIndex = isSelected ? 0 : -1;
+        });
+
+        equipmentPanels.forEach((panel) => {
+          panel.hidden = panel.dataset.equipmentPanel !== selectedId;
+        });
+      };
+
+      equipmentTabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateEquipmentTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+
+          event.preventDefault();
+          let nextIndex = index;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + equipmentTabs.length) % equipmentTabs.length;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % equipmentTabs.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = equipmentTabs.length - 1;
+
+          const nextTab = equipmentTabs[nextIndex];
+          activateEquipmentTab(nextTab);
+          nextTab.focus();
+        });
+      });
+
       const form = document.querySelector<HTMLFormElement>('#contact-form');
 
       form?.addEventListener('submit', async (event) => {
