@@ -104,9 +104,20 @@ button, input, textarea { font: inherit; }
 .product-kicker { color: var(--accent-dark); font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .equipment-model-content h3 { margin: 8px 0 10px; font-size: 30px; letter-spacing: -.035em; line-height: 1.08; }
 .equipment-model-description { margin: 0; color: var(--ink-soft); font-size: 14px; }
-.equipment-specs { display: grid; gap: 9px; padding: 0; margin: 24px 0 28px; list-style: none; }
+.equipment-specs-label { margin: 24px 0 0; color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.equipment-specs { display: grid; gap: 9px; padding: 0; margin: 10px 0 28px; list-style: none; }
 .equipment-specs li { position: relative; padding-left: 18px; color: #344854; font-size: 14px; }
 .equipment-specs li::before { position: absolute; top: .65em; left: 0; width: 6px; height: 6px; background: var(--accent); content: ""; }
+.equipment-tech { margin: 0 0 20px; border: 1px solid var(--line); background: #fff; }
+.equipment-tech summary { display: flex; min-height: 48px; align-items: center; justify-content: space-between; gap: 16px; padding: 11px 14px; color: var(--accent-dark); font-size: 13px; font-weight: 750; cursor: pointer; list-style: none; }
+.equipment-tech summary::-webkit-details-marker { display: none; }
+.equipment-tech summary svg { width: 18px; flex: 0 0 auto; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .18s ease; }
+.equipment-tech[open] summary svg { transform: rotate(180deg); }
+.equipment-tech dl { margin: 0; border-top: 1px solid var(--line); }
+.equipment-tech dl div { display: grid; grid-template-columns: minmax(150px,.9fr) minmax(0,1.1fr); gap: 18px; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.equipment-tech dl div:last-child { border-bottom: 0; }
+.equipment-tech dt { color: #667985; font-size: 12px; }
+.equipment-tech dd { margin: 0; color: var(--ink); font-size: 12px; font-weight: 650; }
 .equipment-files { display: grid; gap: 1px; margin-top: auto; border: 1px solid var(--line); background: var(--line); }
 .equipment-files a { display: grid; min-width: 0; grid-template-columns: 20px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 12px 14px; background: #fff; color: var(--accent-dark); font-size: 13px; font-weight: 700; transition: background .15s,color .15s; }
 .equipment-files a:hover { background: var(--accent); color: #fff; }
@@ -249,6 +260,7 @@ button, input, textarea { font: inherit; }
   .equipment-models.is-single .equipment-model-image,.equipment-model-image { height: 260px; min-height: 0; }
   .equipment-model-content { padding: 22px 18px; }
   .equipment-model-content h3 { font-size: 27px; }
+  .equipment-tech dl div { grid-template-columns: 1fr; gap: 3px; }
   .equipment-files a { grid-template-columns: 20px minmax(0,1fr) auto; }
   .equipment-additional { grid-template-columns: 1fr; gap: 18px; padding: 24px 20px; }
   .project-list { display: grid; grid-template-columns: 1fr; }
