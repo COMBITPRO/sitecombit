@@ -111,14 +111,14 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
                         <ul class="equipment-specs">
                           {model.specs.map((spec) => <li>{spec}</li>)}
                         </ul>
-                        {model.technicalSpecifications.length > 0 && (
+                        {(model.technicalSpecifications ?? []).length > 0 && (
                           <details class="equipment-tech">
                             <summary>
                               <span>Технические характеристики</span>
                               <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg>
                             </summary>
                             <dl>
-                              {model.technicalSpecifications.map((item: { parameter: string; value: string }) => (
+                              {(model.technicalSpecifications ?? []).map((item: { parameter: string; value: string }) => (
                                 <div><dt>{item.parameter}</dt><dd>{item.value}</dd></div>
                               ))}
                             </dl>
