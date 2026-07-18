@@ -12,7 +12,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
     </a>
 
     <nav class="desktop-nav" aria-label="Основная навигация">
-      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      {(site.navigation ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
 
     <a class="header-phone" href={`tel:${phoneHref}`}>
@@ -23,7 +23,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
     <details class="mobile-menu">
       <summary aria-label="Открыть меню"><span></span><span></span><span></span></summary>
       <nav aria-label="Мобильная навигация">
-        {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+        {(site.navigation ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
         <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       </nav>
     </details>

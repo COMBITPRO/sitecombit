@@ -11,17 +11,17 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
       <a class="brand brand-footer" href="#top" aria-label="Комбит Про — наверх">
         <Logo />
       </a>
-      <p>{site.footer.description}</p>
+      <p class="rich-text">{site.footer.description}</p>
     </div>
     <div class="footer-links">
       <strong>{site.footer.sectionsTitle}</strong>
-      {site.footer.links.map((item) => <a href={item.href}>{item.label}</a>)}
+      {(site.footer.links ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
     </div>
     <div class="footer-links">
       <strong>{site.footer.contactsTitle}</strong>
       <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-      <span>{site.contact.address}</span>
+      <span class="rich-text">{site.contact.address}</span>
     </div>
   </div>
   <div class="container footer-bottom">

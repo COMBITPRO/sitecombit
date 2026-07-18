@@ -23,19 +23,19 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
     <Header />
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-labelledby="hero-title" style={`--hero-image: url("${site.hero.image}")`}>
         <div class="container hero-inner">
           <div class="hero-copy">
             <p class="eyebrow">{site.hero.eyebrow}</p>
             <h1 id="hero-title">{site.hero.title}<br /><span>{site.hero.accentTitle}</span></h1>
-            <p class="hero-description">{site.hero.description}</p>
+            <p class="hero-description rich-text">{site.hero.description}</p>
             <div class="hero-actions">
               <a class="button" href="#contacts">{site.hero.primaryButton} <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 15 10-10m0 0H7m8 0v8" stroke="currentColor" stroke-width="1.8" /></svg></a>
               <a class="button button-outline" href="#equipment">{site.hero.secondaryButton}</a>
             </div>
           </div>
           <div class="hero-facts" aria-label="Ключевые показатели">
-            {site.hero.facts.map((fact) => <div class="hero-fact"><strong>{fact.value}</strong><span>{fact.label}</span></div>)}
+            {(site.hero.facts ?? []).map((fact) => <div class="hero-fact"><strong>{fact.value}</strong><span>{fact.label}</span></div>)}
           </div>
         </div>
       </section>
@@ -56,9 +56,9 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
           <div class="about-copy">
             <p class="eyebrow">{site.about.eyebrow}</p>
             <h2 class="section-title">{site.about.title}</h2>
-            <p>{site.about.description}</p>
+            <p class="rich-text">{site.about.description}</p>
             <ul class="industry-list">
-              {site.about.industries.map((industry) => <li>{industry}</li>)}
+              {(site.about.industries ?? []).map((industry) => <li>{industry}</li>)}
             </ul>
           </div>
         </div>
@@ -66,10 +66,10 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 
       <section class="section section-muted" id="equipment">
         <div class="container">
-          <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title">{site.equipment.title}</h2></div><p class="section-lead">{site.equipment.lead}</p></div>
+          <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title">{site.equipment.title}</h2></div><p class="section-lead rich-text">{site.equipment.lead}</p></div>
 
           <div class="equipment-tabs" role="tablist" aria-label="Группы измерительного оборудования">
-            {site.equipment.groups.map((group, index) => (
+            {(site.equipment.groups ?? []).map((group, index) => (
               <button
                 id={`equipment-tab-${group.id}`}
                 class="equipment-tab"
@@ -87,7 +87,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
           </div>
 
           <div class="equipment-panels">
-            {site.equipment.groups.map((group, index) => (
+            {(site.equipment.groups ?? []).map((group, index) => (
               <section
                 id={`equipment-panel-${group.id}`}
                 class="equipment-panel"
@@ -96,9 +96,9 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
                 hidden={index !== 0}
                 data-equipment-panel={group.id}
               >
-                <p class="equipment-summary">{group.summary}</p>
-                <div class:list={['equipment-models', { 'is-single': group.models.length === 1 }]}>
-                  {group.models.map((model) => (
+                <p class="equipment-summary rich-text">{group.summary}</p>
+                <div class:list={['equipment-models', { 'is-single': (group.models ?? []).length === 1 }]}>
+                  {(group.models ?? []).map((model) => (
                     <article class="equipment-model">
                       <div class="equipment-model-image">
                         <img src={model.image} alt={model.alt} loading="lazy" />
@@ -106,10 +106,10 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
                       <div class="equipment-model-content">
                         <span class="product-kicker">{model.kicker}</span>
                         <h3>{model.title}</h3>
-                        <p class="equipment-model-description">{model.description}</p>
+                        <p class="equipment-model-description rich-text">{model.description}</p>
                         <p class="equipment-specs-label">Ключевые параметры</p>
                         <ul class="equipment-specs">
-                          {model.specs.map((spec) => <li>{spec}</li>)}
+                          {(model.specs ?? []).map((spec) => <li>{spec}</li>)}
                         </ul>
                         {(model.technicalSpecifications ?? []).length > 0 && (
                           <details class="equipment-tech">
@@ -124,9 +124,9 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
                             </dl>
                           </details>
                         )}
-                        {model.files.length > 0 && (
+                        {(model.files ?? []).length > 0 && (
                           <div class="equipment-files" aria-label={`Файлы для ${model.title}`}>
-                            {model.files.map((file) => (
+                            {(model.files ?? []).map((file) => (
                               <a href={file.href} download>
                                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                   <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14" />
@@ -147,57 +147,57 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 
           <div class="equipment-additional">
             <h3>{site.equipment.additionalTitle}</h3>
-            <ul>{site.equipment.additionalItems.map((item) => <li>{item}</li>)}</ul>
+            <ul>{(site.equipment.additionalItems ?? []).map((item) => <li>{item}</li>)}</ul>
           </div>
         </div>
       </section>
 
       <section class="section services-section" id="services">
         <div class="container">
-          <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title">{site.services.title}</h2></div><p class="section-lead">{site.services.lead}</p></div>
+          <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title">{site.services.title}</h2></div><p class="section-lead rich-text">{site.services.lead}</p></div>
           <div class="services-grid">
-            {site.services.items.map((item, index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}
+            {(site.services.items ?? []).map((item, index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p class="rich-text">{item.description}</p></article>)}
           </div>
         </div>
       </section>
 
       <section class="section">
         <div class="container advantages">
-          <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2><p class="section-lead">{site.advantages.lead}</p></div>
-          <div class="advantage-list">{site.advantages.items.map((item) => <article class="advantage-item"><div><h3>{item.title}</h3><p>{item.description}</p></div></article>)}</div>
+          <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2><p class="section-lead rich-text">{site.advantages.lead}</p></div>
+          <div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div><h3>{item.title}</h3><p class="rich-text">{item.description}</p></div></article>)}</div>
         </div>
       </section>
 
       <section class="section projects-section" id="projects">
         <div class="container">
-          <div class="project-intro"><div><p class="eyebrow">{site.projects.eyebrow}</p><h2 class="section-title">{site.projects.title}</h2></div><p>{site.projects.lead}</p></div>
+          <div class="project-intro"><div><p class="eyebrow">{site.projects.eyebrow}</p><h2 class="section-title">{site.projects.title}</h2></div><p class="rich-text">{site.projects.lead}</p></div>
           <div class="stats-grid">
-            {site.projects.stats.map((stat) => <div class="stat-card"><strong>{stat.value}{stat.suffix && <span>{stat.suffix}</span>}</strong><p>{stat.description}</p></div>)}
+            {(site.projects.stats ?? []).map((stat) => <div class="stat-card"><strong>{stat.value}{stat.suffix && <span>{stat.suffix}</span>}</strong><p class="rich-text">{stat.description}</p></div>)}
           </div>
-          <div class="project-list">{site.projects.items.map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><p>{project}</p></div>)}</div>
+          <div class="project-list">{(site.projects.items ?? []).map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><p class="rich-text">{project}</p></div>)}</div>
         </div>
       </section>
 
       <section class="section" aria-labelledby="clients-title">
         <div class="container">
-          <div class="clients-header"><div><p class="eyebrow">{site.clients.eyebrow}</p><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div><p>{site.clients.lead}</p></div>
-          <div class="client-grid">{site.clients.items.map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
+          <div class="clients-header"><div><p class="eyebrow">{site.clients.eyebrow}</p><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div><p class="rich-text">{site.clients.lead}</p></div>
+          <div class="client-grid">{(site.clients.items ?? []).map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
         </div>
       </section>
 
       <section class="section contact-section" id="contacts">
         <div class="container contact-grid">
           <div class="contact-copy">
-            <p class="eyebrow">{site.contactSection.eyebrow}</p><h2 class="section-title">{site.contactSection.title}</h2><p>{site.contactSection.lead}</p>
+            <p class="eyebrow">{site.contactSection.eyebrow}</p><h2 class="section-title">{site.contactSection.title}</h2><p class="rich-text">{site.contactSection.lead}</p>
             <div class="contact-details">
               <div class="contact-detail"><span>Телефон</span><a href={`tel:${phoneHref}`}>{site.contact.phone}</a></div>
               <div class="contact-detail"><span>Почта</span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
-              <div class="contact-detail"><span>Адрес</span><address>{site.contact.address}</address></div>
+              <div class="contact-detail"><span>Адрес</span><address class="rich-text">{site.contact.address}</address></div>
             </div>
           </div>
 
           <div class="contact-form-wrap">
-            <h3>{site.contactSection.form.title}</h3><p>{site.contactSection.form.lead}</p>
+            <h3>{site.contactSection.form.title}</h3><p class="rich-text">{site.contactSection.form.lead}</p>
             <form
               class="contact-form"
               id="contact-form"
