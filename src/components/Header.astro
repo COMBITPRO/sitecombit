@@ -6,19 +6,13 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 ---
 
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="#top" aria-label="Комбит Про — на главную">
-      <Logo />
-    </a>
+  <div class="container header-top">
+    <a class="brand" href="#top" aria-label="Комбит Про — на главную"><Logo /></a>
 
-    <nav class="desktop-nav" aria-label="Основная навигация">
-      {(site.navigation ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
-    </nav>
-
-    <a class="header-phone" href={`tel:${phoneHref}`}>
-      <span>{site.contact.phone}</span>
-      <small>{site.contact.headerCta}</small>
-    </a>
+    <div class="header-actions">
+      <a class="header-phone" href={`tel:${phoneHref}`}>{site.contact.phone}</a>
+      <a class="header-cta" href="#contacts">{site.contact.headerCta}</a>
+    </div>
 
     <details class="mobile-menu">
       <summary aria-label="Открыть меню"><span></span><span></span><span></span></summary>
@@ -27,6 +21,12 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
         <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       </nav>
     </details>
+  </div>
+
+  <div class="header-navigation">
+    <nav class="container desktop-nav" aria-label="Основная навигация">
+      {(site.navigation ?? []).map((item, index) => <a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}</a>)}
+    </nav>
   </div>
 </header>
 

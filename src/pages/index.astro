@@ -28,7 +28,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
           <div class="hero-copy">
             <p class="eyebrow">{site.hero.eyebrow}</p>
             <h1 id="hero-title">{site.hero.title}<br /><span>{site.hero.accentTitle}</span></h1>
-            <p class="hero-description rich-text">{site.hero.description}</p>
+            {site.hero.description && <p class="hero-description rich-text">{site.hero.description}</p>}
             <div class="hero-actions">
               <a class="button" href="#contacts">{site.hero.primaryButton} <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 15 10-10m0 0H7m8 0v8" stroke="currentColor" stroke-width="1.8" /></svg></a>
               <a class="button button-outline" href="#equipment">{site.hero.secondaryButton}</a>
@@ -40,14 +40,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
         </div>
       </section>
 
-      <aside class="dealer-strip" aria-label="Официальный статус">
-        <div class="container dealer-inner">
-          <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div><strong>{site.dealer.title}</strong><span>{site.dealer.description}</span></div></div>
-          <span class="dealer-label">{site.dealer.label}</span>
-        </div>
-      </aside>
-
-      <section class="section" id="about">
+      <section class="section" id="audience">
         <div class="container about-grid">
           <div class="about-visual">
             <img src={site.about.image} alt={site.about.imageAlt} loading="lazy" />
@@ -55,8 +48,8 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
           </div>
           <div class="about-copy">
             <p class="eyebrow">{site.about.eyebrow}</p>
-            <h2 class="section-title">{site.about.title}</h2>
-            <p class="rich-text">{site.about.description}</p>
+            <h2 class="about-statement">{site.about.title}</h2>
+            {site.about.description && <p class="rich-text">{site.about.description}</p>}
             <ul class="industry-list">
               {(site.about.industries ?? []).map((industry) => <li>{industry}</li>)}
             </ul>
@@ -64,9 +57,32 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
         </div>
       </section>
 
+      <aside class="dealer-strip" aria-label="Официальный статус">
+        <div class="container dealer-inner">
+          <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div><strong>{site.dealer.title}</strong>{site.dealer.description && <span>{site.dealer.description}</span>}</div></div>
+          <span class="dealer-label">{site.dealer.label}</span>
+        </div>
+      </aside>
+
+      <section class="section" id="clients" aria-labelledby="clients-title">
+        <div class="container">
+          <div class="clients-header"><div><p class="eyebrow">{site.clients.eyebrow}</p><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div>{site.clients.lead && <p class="rich-text">{site.clients.lead}</p>}</div>
+          <div class="client-grid">{(site.clients.items ?? []).map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
+          <ul class="client-name-list">{(site.clients.names ?? []).map((name) => <li>{name}</li>)}</ul>
+          {site.clients.closing && <p class="clients-closing rich-text">{site.clients.closing}</p>}
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container advantages">
+          <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2></div>
+          <div><div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div><h3>{item.title}</h3>{item.description && <p class="rich-text">{item.description}</p>}</div></article>)}</div>{site.advantages.closing && <p class="advantages-closing rich-text">{site.advantages.closing}</p>}</div>
+        </div>
+      </section>
+
       <section class="section section-muted" id="equipment">
         <div class="container">
-          <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title">{site.equipment.title}</h2></div><p class="section-lead rich-text">{site.equipment.lead}</p></div>
+          <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title section-title-long">{site.equipment.title}</h2></div>{site.equipment.lead && <p class="section-lead rich-text">{site.equipment.lead}</p>}</div>
 
           <div class="equipment-tabs" role="tablist" aria-label="Группы измерительного оборудования">
             {(site.equipment.groups ?? []).map((group, index) => (
@@ -106,7 +122,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
                       <div class="equipment-model-content">
                         <span class="product-kicker">{model.kicker}</span>
                         <h3>{model.title}</h3>
-                        <p class="equipment-model-description rich-text">{model.description}</p>
+                        {model.description && <p class="equipment-model-description rich-text">{model.description}</p>}
                         <p class="equipment-specs-label">Ключевые параметры</p>
                         <ul class="equipment-specs">
                           {(model.specs ?? []).map((spec) => <li>{spec}</li>)}
@@ -154,34 +170,31 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 
       <section class="section services-section" id="services">
         <div class="container">
-          <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title">{site.services.title}</h2></div><p class="section-lead rich-text">{site.services.lead}</p></div>
+          <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title section-title-long">{site.services.title}</h2></div>{site.services.lead && <p class="section-lead rich-text">{site.services.lead}</p>}</div>
           <div class="services-grid">
-            {(site.services.items ?? []).map((item, index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3><p class="rich-text">{item.description}</p></article>)}
+            {(site.services.items ?? []).map((item, index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3>{item.description && <p class="rich-text">{item.description}</p>}</article>)}
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container advantages">
-          <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2><p class="section-lead rich-text">{site.advantages.lead}</p></div>
-          <div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div><h3>{item.title}</h3><p class="rich-text">{item.description}</p></div></article>)}</div>
+      <section class="section company-section" id="company">
+        <div class="container">
+          <div class="company-header"><p class="eyebrow">{site.company.eyebrow}</p><h2 class="section-title">{site.company.title}</h2>{site.company.lead && <p class="section-lead rich-text">{site.company.lead}</p>}</div>
+          <h3 class="company-directions-title">{site.company.directionsTitle}</h3>
+          <div class="company-directions">{(site.company.directions ?? []).map((direction, index) => <article class="company-direction"><span>{index + 1}</span><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <li>{item}</li>)}</ul></div></article>)}</div>
         </div>
       </section>
 
       <section class="section projects-section" id="projects">
         <div class="container">
-          <div class="project-intro"><div><p class="eyebrow">{site.projects.eyebrow}</p><h2 class="section-title">{site.projects.title}</h2></div><p class="rich-text">{site.projects.lead}</p></div>
-          <div class="stats-grid">
-            {(site.projects.stats ?? []).map((stat) => <div class="stat-card"><strong>{stat.value}{stat.suffix && <span>{stat.suffix}</span>}</strong><p class="rich-text">{stat.description}</p></div>)}
-          </div>
+          <div class="project-intro"><div><p class="eyebrow">{site.projects.eyebrow}</p><h2 class="section-title">{site.projects.title}</h2></div>{site.projects.lead && <p class="rich-text">{site.projects.lead}</p>}</div>
           <div class="project-list">{(site.projects.items ?? []).map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><p class="rich-text">{project}</p></div>)}</div>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="clients-title">
-        <div class="container">
-          <div class="clients-header"><div><p class="eyebrow">{site.clients.eyebrow}</p><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div><p class="rich-text">{site.clients.lead}</p></div>
-          <div class="client-grid">{(site.clients.items ?? []).map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
+          {site.projects.afterword && <p class="project-afterword rich-text">{site.projects.afterword}</p>}
+          {site.projects.constructionTitle && <h3 class="project-construction-title">{site.projects.constructionTitle}</h3>}
+          {(site.projects.constructionItems ?? []).length > 0 && <div class="project-list project-construction-list">{(site.projects.constructionItems ?? []).map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><p class="rich-text">{project}</p></div>)}</div>}
+          <div class="stats-grid">
+            {(site.projects.stats ?? []).map((stat) => <div class="stat-card"><strong>{stat.value}{stat.suffix && <span>{stat.suffix}</span>}</strong>{stat.description && <p class="rich-text">{stat.description}</p>}</div>)}
+          </div>
         </div>
       </section>
 
@@ -191,7 +204,8 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
             <p class="eyebrow">{site.contactSection.eyebrow}</p><h2 class="section-title">{site.contactSection.title}</h2><p class="rich-text">{site.contactSection.lead}</p>
             <div class="contact-details">
               <div class="contact-detail"><span>Телефон</span><a href={`tel:${phoneHref}`}>{site.contact.phone}</a></div>
-              <div class="contact-detail"><span>Почта</span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
+              <div class="contact-detail"><span>Факс</span><span class="contact-value">{site.contact.fax}</span></div>
+              <div class="contact-detail"><span>E-mail</span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
               <div class="contact-detail"><span>Адрес</span><address class="rich-text">{site.contact.address}</address></div>
             </div>
           </div>
