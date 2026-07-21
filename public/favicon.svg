@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#071827"/>
-  <path fill="#a8c83f" d="M9 11h21v10H19v22h11v10H9V11Zm46 0H34v10h11v22H34v10h21V11ZM26 26h12v12H26z"/>
+  <title>Комбит Про</title>
+  <rect width="64" height="64" rx="14" fill="#071827"/>
+  <path d="M11 12v40m5-20 13-20m-13 20 13 20" fill="none" stroke="#fff" stroke-linecap="square" stroke-linejoin="miter" stroke-width="6"/>
+  <path d="M41 52V12h13v40" fill="none" stroke="#8fc6e8" stroke-linecap="square" stroke-linejoin="miter" stroke-width="6"/>
 </svg>

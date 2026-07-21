@@ -161,10 +161,24 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
             ))}
           </div>
 
-          <div class="equipment-additional">
-            <h3>{site.equipment.additionalTitle}</h3>
-            <ul>{(site.equipment.additionalItems ?? []).map((item) => <li>{item}</li>)}</ul>
-          </div>
+          <section class="additional-solutions" aria-labelledby="additional-solutions-title">
+            <div class="additional-solutions-header">
+              <div>
+                <p class="eyebrow">Комплексные решения</p>
+                <h3 id="additional-solutions-title">{site.equipment.additionalTitle}</h3>
+              </div>
+              {site.equipment.additionalLead && <p class="rich-text">{site.equipment.additionalLead}</p>}
+            </div>
+            <div class="additional-solutions-grid">
+              {(site.equipment.additionalSolutions ?? []).map((solution, index) => (
+                <article class="additional-solution-card">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h4>{solution.title}</h4>
+                  {solution.description && <p class="rich-text">{solution.description}</p>}
+                </article>
+              ))}
+            </div>
+          </section>
         </div>
       </section>
 
