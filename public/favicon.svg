@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>Комбит Про</title>
   <rect width="64" height="64" rx="14" fill="#071827"/>
-  <path d="M11 12v40m5-20 13-20m-13 20 13 20" fill="none" stroke="#fff" stroke-linecap="square" stroke-linejoin="miter" stroke-width="6"/>
-  <path d="M41 52V12h13v40" fill="none" stroke="#8fc6e8" stroke-linecap="square" stroke-linejoin="miter" stroke-width="6"/>
+  <g font-family="Bahnschrift, 'Arial Narrow', Arial, sans-serif" font-size="38" font-weight="700" text-anchor="middle">
+    <text x="19" y="45" fill="#fff">К</text>
+    <text x="46" y="45" fill="#8fc6e8">П</text>
+  </g>
 </svg>

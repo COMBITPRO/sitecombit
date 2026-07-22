@@ -3,6 +3,7 @@ import Logo from './Logo.astro';
 import site from '../content/site.json';
 
 const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
+const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [...models].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 ---
 
 <header class="site-header">
@@ -18,6 +19,18 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
       <summary aria-label="Открыть меню"><span></span><span></span><span></span></summary>
       <nav aria-label="Мобильная навигация">
         {(site.navigation ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
+        <details class="mobile-equipment-menu">
+          <summary>Оборудование</summary>
+          <a class="mobile-equipment-overview" href="#equipment">{site.equipment.title}</a>
+          {(site.equipment.groups ?? []).map((group) => (
+            <div>
+              <a class="mobile-equipment-group" href={`#equipment-panel-${group.id}`} data-equipment-target={group.id}>{group.label}</a>
+              {orderedModels(group.models).map((model) => <a class="mobile-equipment-model" href={`#equipment-model-${model.id}`} data-equipment-target={group.id}>{model.title}</a>)}
+            </div>
+          ))}
+          <a class="mobile-equipment-overview" href="#additional-solutions">{site.equipment.additionalTitle}</a>
+          {(site.equipment.additionalSolutions ?? []).map((solution, index) => <a class="mobile-equipment-model" href={`#additional-solution-${index + 1}`}>{solution.title}</a>)}
+        </details>
         <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       </nav>
     </details>
@@ -25,7 +38,33 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 
   <div class="header-navigation">
     <nav class="container desktop-nav" aria-label="Основная навигация">
-      {(site.navigation ?? []).map((item, index) => <a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}</a>)}
+      {(site.navigation ?? []).map((item, index) => item.href === '#equipment' ? (
+        <div class="nav-dropdown">
+          <a class="nav-dropdown-trigger" href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg></a>
+          <div class="equipment-menu" aria-label="Каталог оборудования">
+            <a class="equipment-menu-heading" href="#equipment">{site.equipment.title}</a>
+            <div class="equipment-menu-catalog">
+              {(site.equipment.groups ?? []).map((group) => (
+                <section class="equipment-menu-group">
+                  <a href={`#equipment-panel-${group.id}`} data-equipment-target={group.id}>
+                    {group.label}
+                    <small>{(group.models ?? []).length} {(group.models ?? []).length === 1 ? 'модель' : 'модели'}</small>
+                  </a>
+                  <div>
+                    {orderedModels(group.models).map((model) => <a href={`#equipment-model-${model.id}`} data-equipment-target={group.id}>{model.title}</a>)}
+                  </div>
+                </section>
+              ))}
+            </div>
+            <div class="equipment-menu-additional">
+              <a href="#additional-solutions"><span>{site.equipment.additionalTitle}</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 15 10-10m0 0H7m8 0v8" /></svg></a>
+              <div>
+                {(site.equipment.additionalSolutions ?? []).map((solution, index) => <a href={`#additional-solution-${index + 1}`}>{solution.title}</a>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : <a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}</a>)}
     </nav>
   </div>
 </header>

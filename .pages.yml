@@ -104,12 +104,12 @@ content:
                   min: 0
                   collapsible: { collapsed: true, summary: "{title}" }
                 fields:
+                  - { name: id, label: Технический идентификатор, description: "Уникальное значение латиницей для ссылки на модель, например: ulm-42.", type: string, required: true }
                   - { name: image, label: Изображение, type: image, required: true }
                   - { name: alt, label: Описание изображения, type: string, required: true }
-                  - { name: kicker, label: Категория, type: string, required: true }
+                  - { name: featured, label: Показывать первой в серии, type: boolean, default: false }
                   - { name: title, label: Название, type: string, required: true }
                   - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
-                  - { name: specs, label: Ключевые параметры, type: string, list: { min: 0 }, required: true }
                   - name: technicalSpecifications
                     label: Подробные технические характеристики
                     description: После добавления хотя бы одной строки на сайте появится отдельный раскрываемый блок.
@@ -131,7 +131,16 @@ content:
                       - { name: href, label: Путь к файлу, type: string, required: true }
                       - { name: format, label: Формат, type: string, required: true }
           - { name: additionalTitle, label: Заголовок дополнительных решений, type: string, required: true }
-          - { name: additionalItems, label: Дополнительные решения, type: string, list: { min: 0 }, required: true }
+          - { name: additionalLead, label: Вводный текст дополнительных решений, type: text }
+          - name: additionalSolutions
+            label: Дополнительные решения
+            type: object
+            list:
+              min: 0
+              collapsible: { collapsed: true, summary: "{title}" }
+            fields:
+              - { name: title, label: Название, type: string, required: true }
+              - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
 
       - name: services
         label: Услуги

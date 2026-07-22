@@ -6,6 +6,7 @@ import '../styles/global.css';
 
 const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT || '';
 const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
+const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [...models].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 ---
 
 <!doctype html>
@@ -98,6 +99,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
               >
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 {group.label}
+                {(group.models ?? []).length > 1 && <small>{(group.models ?? []).length} модели</small>}
               </button>
             ))}
           </div>
@@ -114,19 +116,14 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
               >
                 <p class="equipment-summary rich-text">{group.summary}</p>
                 <div class:list={['equipment-models', { 'is-single': (group.models ?? []).length === 1 }]}>
-                  {(group.models ?? []).map((model) => (
-                    <article class="equipment-model">
+                  {orderedModels(group.models).map((model) => (
+                    <article id={`equipment-model-${model.id}`} class:list={['equipment-model', { 'equipment-model-featured': model.featured }]}>
                       <div class="equipment-model-image">
                         <img src={model.image} alt={model.alt} loading="lazy" />
                       </div>
                       <div class="equipment-model-content">
-                        <span class="product-kicker">{model.kicker}</span>
                         <h3>{model.title}</h3>
                         {model.description && <p class="equipment-model-description rich-text">{model.description}</p>}
-                        <p class="equipment-specs-label">Ключевые параметры</p>
-                        <ul class="equipment-specs">
-                          {(model.specs ?? []).map((spec) => <li>{spec}</li>)}
-                        </ul>
                         {(model.technicalSpecifications ?? []).length > 0 && (
                           <details class="equipment-tech">
                             <summary>
@@ -161,7 +158,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
             ))}
           </div>
 
-          <section class="additional-solutions" aria-labelledby="additional-solutions-title">
+          <section class="additional-solutions" id="additional-solutions" aria-labelledby="additional-solutions-title">
             <div class="additional-solutions-header">
               <div>
                 <p class="eyebrow">Комплексные решения</p>
@@ -171,7 +168,7 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
             </div>
             <div class="additional-solutions-grid">
               {(site.equipment.additionalSolutions ?? []).map((solution, index) => (
-                <article class="additional-solution-card">
+                <article id={`additional-solution-${index + 1}`} class="additional-solution-card">
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <h4>{solution.title}</h4>
                   {solution.description && <p class="rich-text">{solution.description}</p>}
@@ -285,6 +282,14 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
           const nextTab = equipmentTabs[nextIndex];
           activateEquipmentTab(nextTab);
           nextTab.focus();
+        });
+      });
+
+      document.querySelectorAll<HTMLElement>('[data-equipment-target]').forEach((link) => {
+        link.addEventListener('click', () => {
+          const targetId = link.dataset.equipmentTarget;
+          const targetTab = equipmentTabs.find((tab) => tab.dataset.equipmentTab === targetId);
+          if (targetTab) activateEquipmentTab(targetTab);
         });
       });
 
