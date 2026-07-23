@@ -4,6 +4,17 @@ import site from '../content/site.json';
 
 const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [...models].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+const navigation = [
+  { href: '#top', label: site.hero.eyebrow },
+  { href: '#audience', label: site.about.eyebrow },
+  { href: '#clients', label: site.clients.eyebrow },
+  { href: '#advantages', label: site.advantages.eyebrow },
+  { href: '#equipment', label: site.equipment.eyebrow },
+  { href: '#services', label: site.services.eyebrow },
+  { href: '#company', label: site.company.eyebrow },
+  { href: '#projects', label: site.projects.eyebrow },
+  { href: '#contacts', label: site.contactSection.eyebrow },
+];
 ---
 
 <header class="site-header">
@@ -18,7 +29,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
     <details class="mobile-menu">
       <summary aria-label="Открыть меню"><span></span><span></span><span></span></summary>
       <nav aria-label="Мобильная навигация">
-        {(site.navigation ?? []).map((item) => <a href={item.href}>{item.label}</a>)}
+        {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
         <details class="mobile-equipment-menu">
           <summary>Оборудование</summary>
           <a class="mobile-equipment-overview" href="#equipment">{site.equipment.title}</a>
@@ -38,7 +49,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
   <div class="header-navigation">
     <nav class="container desktop-nav" aria-label="Основная навигация">
-      {(site.navigation ?? []).map((item, index) => item.href === '#equipment' ? (
+      {navigation.map((item, index) => item.href === '#equipment' ? (
         <div class="nav-dropdown">
           <a class="nav-dropdown-trigger" href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg></a>
           <div class="equipment-menu" aria-label="Каталог оборудования">

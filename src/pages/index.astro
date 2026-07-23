@@ -58,7 +58,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         </div>
       </section>
 
-      <aside class="dealer-strip" aria-label="Официальный статус">
+      <aside class="dealer-strip" id="dealer" aria-label="Официальный статус">
         <div class="container dealer-inner">
           <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div><strong>{site.dealer.title}</strong>{site.dealer.description && <span>{site.dealer.description}</span>}</div></div>
           <span class="dealer-label">{site.dealer.label}</span>
@@ -74,7 +74,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="advantages">
         <div class="container advantages">
           <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2></div>
           <div><div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div><h3>{item.title}</h3>{item.description && <p class="rich-text">{item.description}</p>}</div></article>)}</div>{site.advantages.closing && <p class="advantages-closing rich-text">{site.advantages.closing}</p>}</div>
@@ -179,7 +179,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         </div>
       </section>
 
-      <section class="section services-section" id="services">
+      <section class="section services-section" id="services" style={`--services-image: url("${site.services.image}")`}>
         <div class="container">
           <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title section-title-long">{site.services.title}</h2></div>{site.services.lead && <p class="section-lead rich-text">{site.services.lead}</p>}</div>
           <div class="services-grid">
