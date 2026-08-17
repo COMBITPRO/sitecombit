@@ -6,6 +6,15 @@ settings:
   content:
     merge: true
 
+components:
+  rich_text:
+    type: rich-text
+    description: "Можно форматировать выделенные фрагменты: жирный, курсив, ссылки, списки и другие доступные в редакторе элементы."
+    options:
+      format: html
+      media: false
+      switcher: false
+
 content:
   - name: site
     label: Содержимое сайта
@@ -45,7 +54,7 @@ content:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок — первая строка, type: string, required: true }
           - { name: accentTitle, label: Заголовок — акцентная строка, type: string, required: true }
-          - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: description, label: Описание, component: rich_text }
           - { name: image, label: Фоновое изображение, type: image, required: true }
           - { name: primaryButton, label: Основная кнопка, type: string, required: true }
           - { name: secondaryButton, label: Дополнительная кнопка, type: string, required: true }
@@ -63,9 +72,9 @@ content:
         label: Статус дилера
         type: object
         fields:
-          - { name: title, label: Заголовок, type: string, required: true }
-          - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: string }
-          - { name: label, label: Метка справа, type: string, required: true }
+          - { name: title, label: Заголовок, component: rich_text, required: true }
+          - { name: description, label: Описание, component: rich_text }
+          - { name: label, label: Метка справа, component: rich_text, required: true }
 
       - name: about
         label: О компании
@@ -73,12 +82,12 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: description, label: Описание, component: rich_text }
           - { name: image, label: Изображение, type: image, required: true }
           - { name: imageAlt, label: Описание изображения, type: string, required: true }
           - { name: stampValue, label: Число на плашке, type: string, required: true }
           - { name: stampText, label: Текст на плашке, type: string, required: true }
-          - { name: industries, label: Отрасли, type: string, list: { min: 0 }, required: true }
+          - { name: industries, label: Отрасли, component: rich_text, list: { min: 0 }, required: true }
 
       - name: equipment
         label: Оборудование
@@ -86,7 +95,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: lead, label: Вводный текст, component: rich_text }
           - name: groups
             label: Группы оборудования
             type: object
@@ -96,7 +105,7 @@ content:
             fields:
               - { name: id, label: Технический идентификатор, description: "Уникальное значение латиницей, например: ulm-42.", type: string, required: true }
               - { name: label, label: Название вкладки, type: string, required: true }
-              - { name: summary, label: Описание группы, type: text, required: true }
+              - { name: summary, label: Описание группы, component: rich_text, required: true }
               - name: models
                 label: Модели
                 type: object
@@ -109,7 +118,7 @@ content:
                   - { name: alt, label: Описание изображения, type: string, required: true }
                   - { name: featured, label: Показывать первой в серии, type: boolean, default: false }
                   - { name: title, label: Название, type: string, required: true }
-                  - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+                  - { name: description, label: Описание, component: rich_text }
                   - name: technicalSpecifications
                     label: Подробные технические характеристики
                     description: После добавления хотя бы одной строки на сайте появится отдельный раскрываемый блок.
@@ -131,7 +140,7 @@ content:
                       - { name: href, label: Путь к файлу, type: string, required: true }
                       - { name: format, label: Формат, type: string, required: true }
           - { name: additionalTitle, label: Заголовок дополнительных решений, type: string, required: true }
-          - { name: additionalLead, label: Вводный текст дополнительных решений, type: text }
+          - { name: additionalLead, label: Вводный текст дополнительных решений, component: rich_text }
           - name: additionalSolutions
             label: Дополнительные решения
             type: object
@@ -140,7 +149,7 @@ content:
               collapsible: { collapsed: true, summary: "{title}" }
             fields:
               - { name: title, label: Название, type: string, required: true }
-              - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+              - { name: description, label: Описание, component: rich_text }
 
       - name: services
         label: Услуги
@@ -148,7 +157,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: lead, label: Вводный текст, component: rich_text }
           - name: items
             label: Список услуг
             type: object
@@ -157,7 +166,7 @@ content:
               collapsible: { collapsed: true, summary: "{title}" }
             fields:
               - { name: title, label: Название, type: string, required: true }
-              - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+              - { name: description, label: Описание, component: rich_text }
 
       - name: advantages
         label: Преимущества
@@ -165,7 +174,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: closing, label: Заключительный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: closing, label: Заключительный текст, component: rich_text }
           - name: items
             label: Список преимуществ
             type: object
@@ -174,7 +183,7 @@ content:
               collapsible: { collapsed: true, summary: "{title}" }
             fields:
               - { name: title, label: Название, type: string, required: true }
-              - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+              - { name: description, label: Описание, component: rich_text }
 
       - name: company
         label: О компании — подробный блок
@@ -182,7 +191,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: lead, label: Вводный текст, component: rich_text }
           - { name: directionsTitle, label: Заголовок направлений, type: string, required: true }
           - name: directions
             label: Направления деятельности
@@ -192,7 +201,7 @@ content:
               collapsible: { collapsed: true, summary: "{title}" }
             fields:
               - { name: title, label: Название, type: string, required: true }
-              - { name: items, label: Пункты, type: string, list: { min: 0 }, required: true }
+              - { name: items, label: Пункты, component: rich_text, list: { min: 0 }, required: true }
 
       - name: projects
         label: Проекты и показатели
@@ -200,7 +209,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: lead, label: Вводный текст, component: rich_text }
           - name: stats
             label: Показатели
             type: object
@@ -210,11 +219,11 @@ content:
             fields:
               - { name: value, label: Значение, type: string, required: true }
               - { name: suffix, label: Суффикс, type: string }
-              - { name: description, label: Описание, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
-          - { name: items, label: Реализованные проекты, type: string, list: { min: 0 }, required: true }
-          - { name: afterword, label: Текст после проектов, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+              - { name: description, label: Описание, component: rich_text }
+          - { name: items, label: Реализованные проекты, component: rich_text, list: { min: 0 }, required: true }
+          - { name: afterword, label: Текст после проектов, component: rich_text }
           - { name: constructionTitle, label: Заголовок строительных работ, type: string }
-          - { name: constructionItems, label: Строительные работы, type: string, list: { min: 0 } }
+          - { name: constructionItems, label: Строительные работы, component: rich_text, list: { min: 0 } }
 
       - name: clients
         label: Заказчики
@@ -222,7 +231,7 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: lead, label: Вводный текст, component: rich_text }
           - name: items
             label: Логотипы заказчиков
             type: object
@@ -232,8 +241,8 @@ content:
             fields:
               - { name: image, label: Логотип, type: image, required: true }
               - { name: alt, label: Название компании, type: string, required: true }
-          - { name: names, label: Список заказчиков без логотипов, type: string, list: { min: 0 } }
-          - { name: closing, label: Заключительный текст, description: "Необязательное поле: пустое значение не будет выведено на сайте.", type: text }
+          - { name: names, label: Список заказчиков без логотипов, component: rich_text, list: { min: 0 } }
+          - { name: closing, label: Заключительный текст, component: rich_text }
 
       - name: contactSection
         label: Форма связи
@@ -241,13 +250,13 @@ content:
         fields:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
-          - { name: lead, label: Вводный текст, type: text, required: true }
+          - { name: lead, label: Вводный текст, component: rich_text, required: true }
           - name: form
             label: Тексты формы
             type: object
             fields:
               - { name: title, label: Заголовок, type: string, required: true }
-              - { name: lead, label: Описание, type: text, required: true }
+              - { name: lead, label: Описание, component: rich_text, required: true }
               - { name: nameLabel, label: Поле имени, type: string, required: true }
               - { name: companyLabel, label: Поле компании, type: string, required: true }
               - { name: contactLabel, label: Поле контакта, type: string, required: true }
@@ -265,7 +274,7 @@ content:
         label: Подвал
         type: object
         fields:
-          - { name: description, label: Описание компании, type: text, required: true }
+          - { name: description, label: Описание компании, component: rich_text, required: true }
           - { name: sectionsTitle, label: Заголовок разделов, type: string, required: true }
           - { name: contactsTitle, label: Заголовок контактов, type: string, required: true }
           - name: links
