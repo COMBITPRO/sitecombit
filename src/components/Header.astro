@@ -6,9 +6,6 @@ const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [...models].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 const navigation = [
   { href: '#top', label: site.hero.eyebrow },
-  { href: '#audience', label: site.about.eyebrow },
-  { href: '#clients', label: site.clients.eyebrow },
-  { href: '#advantages', label: site.advantages.eyebrow },
   { href: '#equipment', label: site.equipment.eyebrow },
   { href: '#services', label: site.services.eyebrow },
   { href: '#company', label: site.company.eyebrow },
@@ -51,7 +48,7 @@ const navigation = [
     <nav class="container desktop-nav" aria-label="Основная навигация">
       {navigation.map((item, index) => item.href === '#equipment' ? (
         <div class="nav-dropdown">
-          <a class="nav-dropdown-trigger" href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg></a>
+          <a class="nav-dropdown-trigger" href={item.href}>{item.label}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg></a>
           <div class="equipment-menu" aria-label="Каталог оборудования">
             <a class="equipment-menu-heading" href="#equipment">{site.equipment.title}</a>
             <div class="equipment-menu-catalog">
@@ -59,7 +56,6 @@ const navigation = [
                 <section class="equipment-menu-group">
                   <a href={`#equipment-panel-${group.id}`} data-equipment-target={group.id}>
                     {group.label}
-                    <small>{(group.models ?? []).length} {(group.models ?? []).length === 1 ? 'модель' : 'модели'}</small>
                   </a>
                   <div>
                     {orderedModels(group.models).map((model) => <a href={`#equipment-model-${model.id}`} data-equipment-target={group.id}>{model.title}</a>)}
@@ -75,7 +71,7 @@ const navigation = [
             </div>
           </div>
         </div>
-      ) : <a href={item.href}><span>{String(index + 1).padStart(2, '0')}</span>{item.label}</a>)}
+      ) : <a href={item.href}>{item.label}</a>)}
     </nav>
   </div>
 </header>

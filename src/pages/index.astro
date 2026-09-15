@@ -43,32 +43,31 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
       </section>
 
       <section class="section" id="audience">
-        <div class="container about-grid">
-          <div class="about-visual">
-            <img src={site.about.image} alt={site.about.imageAlt} loading="lazy" />
-            <div class="about-stamp"><strong>{site.about.stampValue}</strong><span>{site.about.stampText}</span></div>
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-copy">
+              <h2 class="about-statement">{site.about.title}</h2>
+              {site.about.description && <RichText class="about-description" content={site.about.description} />}
+              <ul class="industry-list">
+                {(site.about.industries ?? []).map((industry) => <RichText as="li" content={industry} />)}
+              </ul>
+            </div>
+            <div class="about-visuals">
+              {(site.about.images ?? []).map((image) => <img src={image.src} alt={image.alt} loading="lazy" />)}
+            </div>
           </div>
-          <div class="about-copy">
-            <p class="eyebrow">{site.about.eyebrow}</p>
-            <h2 class="about-statement">{site.about.title}</h2>
-            {site.about.description && <RichText class="about-description" content={site.about.description} />}
-            <ul class="industry-list">
-              {(site.about.industries ?? []).map((industry) => <RichText as="li" content={industry} />)}
-            </ul>
-          </div>
+          <aside class="dealer-strip" id="dealer" aria-label="Официальный статус">
+            <div class="dealer-inner">
+              <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div class="dealer-content"><div class="dealer-title rich-text-content" set:html={site.dealer.title} />{site.dealer.description && <div class="dealer-description rich-text-content" set:html={site.dealer.description} />}</div></div>
+              <div class="dealer-label rich-text-content" set:html={site.dealer.label} />
+            </div>
+          </aside>
         </div>
       </section>
 
-      <aside class="dealer-strip" id="dealer" aria-label="Официальный статус">
-        <div class="container dealer-inner">
-          <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div class="dealer-content"><div class="dealer-title rich-text-content" set:html={site.dealer.title} />{site.dealer.description && <div class="dealer-description rich-text-content" set:html={site.dealer.description} />}</div></div>
-          <div class="dealer-label rich-text-content" set:html={site.dealer.label} />
-        </div>
-      </aside>
-
       <section class="section" id="clients" aria-labelledby="clients-title">
         <div class="container">
-          <div class="clients-header"><div><p class="eyebrow">{site.clients.eyebrow}</p><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div>{site.clients.lead && <RichText content={site.clients.lead} />}</div>
+          <div class="clients-header"><div><h2 class="section-title" id="clients-title">{site.clients.title}</h2>{site.clients.lead && <RichText class="clients-lead" content={site.clients.lead} />}</div></div>
           <div class="client-grid">{(site.clients.items ?? []).map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
           <ul class="client-name-list">{(site.clients.names ?? []).map((name) => <RichText as="li" content={name} />)}</ul>
           {site.clients.closing && <div class="clients-closing rich-text-content" set:html={site.clients.closing} />}
@@ -77,7 +76,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section" id="advantages">
         <div class="container advantages">
-          <div class="advantages-aside"><p class="eyebrow">{site.advantages.eyebrow}</p><h2 class="section-title">{site.advantages.title}</h2></div>
+          <div class="advantages-aside"><h2 class="section-title">{site.advantages.title}</h2></div>
           <div><div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div><h3>{item.title}</h3>{item.description && <RichText content={item.description} />}</div></article>)}</div>{site.advantages.closing && <RichText class="advantages-closing" content={site.advantages.closing} />}</div>
         </div>
       </section>
@@ -98,9 +97,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
                 tabindex={index === 0 ? 0 : -1}
                 data-equipment-tab={group.id}
               >
-                <span>{String(index + 1).padStart(2, '0')}</span>
                 {group.label}
-                {(group.models ?? []).length > 1 && <small>{(group.models ?? []).length} модели</small>}
               </button>
             ))}
           </div>
@@ -115,7 +112,9 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
                 hidden={index !== 0}
                 data-equipment-panel={group.id}
               >
-                <RichText class="equipment-summary" content={group.summary} />
+                <a class="equipment-summary-link" href={`#equipment-model-${orderedModels(group.models)[0]?.id}`} data-equipment-target={group.id}>
+                  <RichText class="equipment-summary" content={group.summary} />
+                </a>
                 <div class:list={['equipment-models', { 'is-single': (group.models ?? []).length === 1 }]}>
                   {orderedModels(group.models).map((model) => (
                     <article id={`equipment-model-${model.id}`} class:list={['equipment-model', { 'equipment-model-featured': model.featured }]}>
@@ -170,7 +169,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
             <div class="additional-solutions-grid">
               {(site.equipment.additionalSolutions ?? []).map((solution, index) => (
                 <article id={`additional-solution-${index + 1}`} class="additional-solution-card">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {solution.available && <span class="availability-badge">{solution.availabilityLabel ?? 'В продаже'}</span>}
                   <h4>{solution.title}</h4>
                   {solution.description && <RichText content={solution.description} />}
                 </article>
@@ -184,26 +183,27 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         <div class="container">
           <div class="services-header"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title section-title-long">{site.services.title}</h2></div>{site.services.lead && <RichText class="section-lead" content={site.services.lead} />}</div>
           <div class="services-grid">
-            {(site.services.items ?? []).map((item, index) => <article class="service-card"><span class="service-number">{String(index + 1).padStart(2, '0')}</span><h3>{item.title}</h3>{item.description && <RichText content={item.description} />}</article>)}
+            {(site.services.items ?? []).map((item) => <article class="service-card"><h3>{item.title}</h3>{item.description && <RichText content={item.description} />}</article>)}
           </div>
         </div>
       </section>
 
       <section class="section company-section" id="company">
         <div class="container">
-          <div class="company-header"><p class="eyebrow">{site.company.eyebrow}</p><h2 class="section-title">{site.company.title}</h2>{site.company.lead && <div class="company-lead rich-text-content" set:html={site.company.lead} />}</div>
+          <div class="company-header"><h2 class="section-title">{site.company.title}</h2>{site.company.lead && <div class="company-lead rich-text-content" set:html={site.company.lead} />}</div>
           <h3 class="company-directions-title">{site.company.directionsTitle}</h3>
-          <div class="company-directions">{(site.company.directions ?? []).map((direction, index) => <article class="company-direction"><span>{index + 1}</span><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <RichText as="li" content={item} />)}</ul></div></article>)}</div>
+          <div class="company-directions">{(site.company.directions ?? []).map((direction) => <article class="company-direction"><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <RichText as="li" content={item} />)}</ul></div></article>)}</div>
         </div>
       </section>
 
       <section class="section projects-section" id="projects">
         <div class="container">
-          <div class="project-intro"><div><p class="eyebrow">{site.projects.eyebrow}</p><h2 class="section-title">{site.projects.title}</h2></div>{site.projects.lead && <RichText content={site.projects.lead} />}</div>
-          <div class="project-list">{(site.projects.items ?? []).map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><RichText content={project} /></div>)}</div>
+          <div class="project-intro"><div><h2 class="section-title">{site.projects.title}</h2>{site.projects.lead && <RichText class="project-lead" content={site.projects.lead} />}</div></div>
+          {site.projects.itemsTitle && <h3 class="project-items-title">{site.projects.itemsTitle}</h3>}
+          <div class="project-list">{(site.projects.items ?? []).map((project) => <div class="project-item"><RichText content={project} /></div>)}</div>
           {site.projects.afterword && <div class="project-afterword rich-text-content" set:html={site.projects.afterword} />}
           {site.projects.constructionTitle && <h3 class="project-construction-title">{site.projects.constructionTitle}</h3>}
-          {(site.projects.constructionItems ?? []).length > 0 && <div class="project-list project-construction-list">{(site.projects.constructionItems ?? []).map((project, index) => <div class="project-item"><span>{String(index + 1).padStart(2, '0')}</span><RichText content={project} /></div>)}</div>}
+          {(site.projects.constructionItems ?? []).length > 0 && <div class="project-list project-construction-list">{(site.projects.constructionItems ?? []).map((project) => <div class="project-item"><RichText content={project} /></div>)}</div>}
           <div class="stats-grid">
             {(site.projects.stats ?? []).map((stat) => <div class="stat-card"><strong>{stat.value}{stat.suffix && <span>{stat.suffix}</span>}</strong>{stat.description && <RichText content={stat.description} />}</div>)}
           </div>
