@@ -85,6 +85,17 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         <div class="container">
           <div class="equipment-header"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title section-title-long">{site.equipment.title}</h2></div>{site.equipment.lead && <div class="section-lead rich-text-content" set:html={site.equipment.lead} />}</div>
 
+          <ul class="equipment-summary-list" aria-label="Описание серий уровнемеров">
+            {(site.equipment.groups ?? []).map((group) => (
+              <li>
+                <a href={`#equipment-model-${orderedModels(group.models)[0]?.id}`} data-equipment-target={group.id}>
+                  <strong>{group.label}</strong>
+                  <RichText class="equipment-summary" content={group.summary} />
+                </a>
+              </li>
+            ))}
+          </ul>
+
           <div class="equipment-tabs" role="tablist" aria-label="Группы измерительного оборудования">
             {(site.equipment.groups ?? []).map((group, index) => (
               <button
@@ -112,9 +123,6 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
                 hidden={index !== 0}
                 data-equipment-panel={group.id}
               >
-                <a class="equipment-summary-link" href={`#equipment-model-${orderedModels(group.models)[0]?.id}`} data-equipment-target={group.id}>
-                  <RichText class="equipment-summary" content={group.summary} />
-                </a>
                 <div class:list={['equipment-models', { 'is-single': (group.models ?? []).length === 1 }]}>
                   {orderedModels(group.models).map((model) => (
                     <article id={`equipment-model-${model.id}`} class:list={['equipment-model', { 'equipment-model-featured': model.featured }]}>
