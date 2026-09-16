@@ -77,17 +77,21 @@ content:
           - { name: label, label: Метка справа, component: rich_text, required: true }
 
       - name: about
-        label: О компании
+        label: Целевая аудитория
         type: object
         fields:
-          - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
           - { name: description, label: Описание, component: rich_text }
-          - { name: image, label: Изображение, type: image, required: true }
-          - { name: imageAlt, label: Описание изображения, type: string, required: true }
-          - { name: stampValue, label: Число на плашке, type: string, required: true }
-          - { name: stampText, label: Текст на плашке, type: string, required: true }
-          - { name: industries, label: Отрасли, component: rich_text, list: { min: 0 }, required: true }
+          - name: images
+            label: Изображения
+            type: object
+            list:
+              min: 0
+              collapsible: { collapsed: true, summary: "{alt}" }
+            fields:
+              - { name: src, label: Изображение, type: image, required: true }
+              - { name: alt, label: Описание изображения, type: string, required: true }
+          - { name: industries, label: Отрасли, component: rich_text, list: { min: 0 } }
 
       - name: equipment
         label: Оборудование
