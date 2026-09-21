@@ -55,18 +55,12 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
               {(site.about.images ?? []).map((image) => <img src={image.src} alt={image.alt} loading="lazy" />)}
             </div>
           </div>
-          <aside class="dealer-strip" id="dealer" aria-label="Официальный статус">
-            <div class="dealer-inner">
-              <div class="dealer-copy"><span class="dealer-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m6.5 12.5 3.5 3.5 7.5-8" /></svg></span><div class="dealer-content"><div class="dealer-title rich-text-content" set:html={site.dealer.title} />{site.dealer.description && <div class="dealer-description rich-text-content" set:html={site.dealer.description} />}</div></div>
-              <div class="dealer-label rich-text-content" set:html={site.dealer.label} />
-            </div>
-          </aside>
         </div>
       </section>
 
       <section class="section" id="clients" aria-labelledby="clients-title">
         <div class="container">
-          <div class="clients-header"><div><h2 class="section-title" id="clients-title">{site.clients.title}</h2></div></div>
+          <div class="clients-header section-heading-block"><div><h2 class="section-title" id="clients-title">{site.clients.title}</h2>{site.clients.lead && <RichText class="clients-lead" content={site.clients.lead} />}</div></div>
           <div class="client-grid">{(site.clients.items ?? []).map((item) => <div class="client-logo"><img src={item.image} alt={item.alt} loading="lazy" /></div>)}</div>
           <ul class="client-name-list">{(site.clients.names ?? []).map((name) => <RichText as="li" content={name} />)}</ul>
           {site.clients.closing && <div class="clients-closing rich-text-content" set:html={site.clients.closing} />}
@@ -82,7 +76,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section section-muted" id="equipment">
         <div class="container">
-          <div class="equipment-header"><div><h2 class="section-title section-title-long">{site.equipment.title}</h2></div></div>
+          <div class="equipment-header section-heading-block"><div><p class="eyebrow">{site.equipment.eyebrow}</p><h2 class="section-title section-title-long">{site.equipment.title}</h2>{site.equipment.lead && <RichText class="section-lead" content={site.equipment.lead} />}</div></div>
 
           <ul class="equipment-summary-list" aria-label="Описание серий уровнемеров">
             {(site.equipment.groups ?? []).map((group) => (
@@ -132,17 +126,14 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
                         <h3>{model.title}</h3>
                         {model.description && <RichText class="equipment-model-description" content={model.description} />}
                         {(model.technicalSpecifications ?? []).length > 0 && (
-                          <details class="equipment-tech">
-                            <summary>
-                              <span>Технические характеристики</span>
-                              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7.5 5 5 5-5" /></svg>
-                            </summary>
+                          <section class="equipment-tech" aria-label={`Технические характеристики: ${model.title}`}>
+                            <h4>Технические характеристики</h4>
                             <dl>
                               {(model.technicalSpecifications ?? []).map((item: { parameter: string; value: string }) => (
                                 <div><dt>{item.parameter}</dt><dd>{item.value}</dd></div>
                               ))}
                             </dl>
-                          </details>
+                          </section>
                         )}
                         {(model.files ?? []).length > 0 && (
                           <div class="equipment-files" aria-label={`Файлы для ${model.title}`}>
@@ -186,7 +177,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section services-section" id="services" style={`--services-image: url("${site.services.image}")`}>
         <div class="container">
-          <div class="services-header"><div><h2 class="section-title section-title-long">{site.services.title}</h2></div></div>
+          <div class="services-header section-heading-block"><div><p class="eyebrow">{site.services.eyebrow}</p><h2 class="section-title section-title-long">{site.services.title}</h2>{site.services.lead && <RichText class="section-lead" content={site.services.lead} />}</div></div>
           <div class="services-grid">
             {(site.services.items ?? []).map((item) => <article class="service-card"><h3>{item.title}</h3>{item.description && <RichText content={item.description} />}</article>)}
           </div>
@@ -195,7 +186,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section company-section" id="company">
         <div class="container">
-          <div class="company-header"><h2 class="section-title">{site.company.title}</h2></div>
+          <div class="company-header section-heading-block"><div><h2 class="section-title">{site.company.title}</h2></div></div>
           <h3 class="company-directions-title">{site.company.directionsTitle}</h3>
           <div class="company-directions">{(site.company.directions ?? []).map((direction) => <article class="company-direction"><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <RichText as="li" content={item} />)}</ul></div></article>)}</div>
         </div>
@@ -203,7 +194,8 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section projects-section" id="projects">
         <div class="container">
-          <div class="project-intro"><div><h2 class="section-title">{site.projects.title}</h2></div></div>
+          <div class="project-intro section-heading-block"><div><h2 class="section-title">{site.projects.title}</h2></div></div>
+          {site.projects.lead && <RichText class="project-lead" content={site.projects.lead} />}
           {site.projects.itemsTitle && <h3 class="project-items-title">{site.projects.itemsTitle}</h3>}
           <div class="project-list">{(site.projects.items ?? []).map((project) => <div class="project-item"><RichText content={project} /></div>)}</div>
           {site.projects.afterword && <div class="project-afterword rich-text-content" set:html={site.projects.afterword} />}
