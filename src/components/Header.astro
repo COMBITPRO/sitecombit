@@ -19,6 +19,7 @@ const navigation = [
     <a class="brand" href="#top" aria-label="Комбит Про — на главную"><Logo /></a>
 
     <div class="header-actions">
+      <a class="header-email" href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
       <a class="header-phone" href={`tel:${phoneHref}`}>{site.contact.phone}</a>
       <a class="header-cta" href="#contacts">{site.contact.headerCta}</a>
     </div>
@@ -40,6 +41,7 @@ const navigation = [
           {(site.equipment.additionalSolutions ?? []).map((solution, index) => <a class="mobile-equipment-model" href={`#additional-solution-${index + 1}`}>{solution.title}</a>)}
         </details>
         <a href={`tel:${phoneHref}`}>{site.contact.phone}</a>
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
       </nav>
     </details>
   </div>

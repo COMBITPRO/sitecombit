@@ -69,7 +69,10 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
 
       <section class="section" id="advantages" aria-label={site.advantages.title}>
         <div class="container advantages">
-          <div class="advantages-aside"><h2 class="section-title">{site.advantages.title}</h2></div>
+          <div class="advantages-aside">
+            <h2 class="section-title">{site.advantages.title}</h2>
+            {(site.advantages.images ?? []).map((image) => <img class="advantages-image" src={image.src} alt={image.alt} loading="lazy" />)}
+          </div>
           <div><div class="advantage-list">{(site.advantages.items ?? []).map((item) => <article class="advantage-item"><div class="advantage-copy"><strong>{item.title}</strong>{item.description && <RichText content={item.description} />}</div></article>)}</div>{site.advantages.closing && <RichText class="advantages-closing" content={site.advantages.closing} />}</div>
         </div>
       </section>
@@ -80,17 +83,22 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
             <h2 class="section-title" id="equipment-title">{site.equipment.eyebrow}</h2>
             <div class="section-heading-divider" aria-hidden="true"></div>
             <div class="section-heading-content">
-              <h3 class="section-subtitle">{site.equipment.title}</h3>
               {site.equipment.lead && <RichText class="section-lead" content={site.equipment.lead} />}
+              <h3 class="section-subtitle">{site.equipment.title}</h3>
             </div>
           </div>
 
           <ul class="equipment-summary-list" aria-label="Описание серий уровнемеров">
             {(site.equipment.groups ?? []).map((group) => (
               <li>
-                <a href={`#equipment-model-${orderedModels(group.models)[0]?.id}`} data-equipment-target={group.id}>
-                  <strong>{group.label}</strong>
-                  <RichText class="equipment-summary" content={group.summary} />
+                <a class="equipment-summary-link" href={`#equipment-model-${orderedModels(group.models)[0]?.id}`} data-equipment-target={group.id}>
+                  <span class="equipment-summary-icon" aria-hidden="true">
+                    <img src={orderedModels(group.models)[0]?.image} alt="" width="120" height="140" loading="lazy" />
+                  </span>
+                  <div class="equipment-summary-copy">
+                    <strong>{group.label}</strong>
+                    <RichText class="equipment-summary" content={group.summary} />
+                  </div>
                 </a>
               </li>
             ))}
@@ -188,8 +196,8 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
             <h2 class="section-title" id="services-title">{site.services.eyebrow}</h2>
             <div class="section-heading-divider" aria-hidden="true"></div>
             <div class="section-heading-content">
-              <h3 class="section-subtitle">{site.services.title}</h3>
               {site.services.lead && <RichText class="section-lead" content={site.services.lead} />}
+              <h3 class="section-subtitle">{site.services.title}</h3>
             </div>
           </div>
           <div class="services-grid">
@@ -202,7 +210,12 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
         <div class="container">
           <div class="company-header section-heading-block"><h2 class="section-title">{site.company.title}</h2><div class="section-heading-divider" aria-hidden="true"></div></div>
           <h3 class="company-directions-title">{site.company.directionsTitle}</h3>
-          <div class="company-directions">{(site.company.directions ?? []).map((direction) => <article class="company-direction"><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <RichText as="li" content={item} />)}</ul></div></article>)}</div>
+          <div class:list={['company-directions-layout', { 'has-visuals': (site.company.images ?? []).length > 0 }]}>
+            <div class="company-directions">{(site.company.directions ?? []).map((direction) => <article class="company-direction"><div><h3>{direction.title}</h3><ul>{(direction.items ?? []).map((item) => <RichText as="li" content={item} />)}</ul></div></article>)}</div>
+            <div class="company-visuals">
+              {(site.company.images ?? []).map((image) => <img src={image.src} alt={image.alt} loading="lazy" />)}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -227,7 +240,6 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
             <h2 class="section-title">{site.contactSection.title}</h2>
             <div class="contact-details">
               <div class="contact-detail"><span>Телефон</span><a href={`tel:${phoneHref}`}>{site.contact.phone}</a></div>
-              <div class="contact-detail"><span>Факс</span><span class="contact-value">{site.contact.fax}</span></div>
               <div class="contact-detail"><span>E-mail</span><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
               <div class="contact-detail"><span>Адрес</span><address class="rich-text">{site.contact.address}</address></div>
             </div>
@@ -247,7 +259,7 @@ const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [.
             >
               <input type="hidden" name="_subject" value="Новая заявка с сайта Комбит Про" />
               <div class="form-field"><label for="name">{site.contactSection.form.nameLabel}</label><input id="name" name="name" autocomplete="name" required /></div>
-              <div class="form-field"><label for="company">{site.contactSection.form.companyLabel}</label><input id="company" name="company" autocomplete="organization" /></div>
+              <div class="form-field"><label for="contact-company">{site.contactSection.form.companyLabel}</label><input id="contact-company" name="company" autocomplete="organization" /></div>
               <div class="form-field form-field-full"><label for="contact">{site.contactSection.form.contactLabel}</label><input id="contact" name="contact" autocomplete="email" required /></div>
               <div class="form-field form-field-full"><label for="message">{site.contactSection.form.messageLabel}</label><textarea id="message" name="message"></textarea></div>
               <label class="form-consent"><input type="checkbox" name="consent" value="Да" required /><span>{site.contactSection.form.consent}</span></label>

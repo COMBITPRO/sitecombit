@@ -42,7 +42,6 @@ content:
         type: object
         fields:
           - { name: phone, label: Телефон, type: string, required: true }
-          - { name: fax, label: Факс, type: string }
           - { name: email, label: Электронная почта, type: string, required: true }
           - { name: address, label: Адрес, type: text, required: true }
           - { name: headerCta, label: Подпись под телефоном, type: string, required: true }
@@ -179,6 +178,15 @@ content:
           - { name: eyebrow, label: Надзаголовок, type: string, required: true }
           - { name: title, label: Заголовок, type: string, required: true }
           - { name: closing, label: Заключительный текст, component: rich_text }
+          - name: images
+            label: Изображения рядом с преимуществами
+            type: object
+            list:
+              min: 0
+              collapsible: { collapsed: true, summary: "{alt}" }
+            fields:
+              - { name: src, label: Изображение, type: image, required: true }
+              - { name: alt, label: Описание изображения, type: string, required: true }
           - name: items
             label: Список преимуществ
             type: object
@@ -197,6 +205,15 @@ content:
           - { name: title, label: Заголовок, type: string, required: true }
           - { name: lead, label: Вводный текст, component: rich_text }
           - { name: directionsTitle, label: Заголовок направлений, type: string, required: true }
+          - name: images
+            label: Изображения рядом с направлениями деятельности
+            type: object
+            list:
+              min: 0
+              collapsible: { collapsed: true, summary: "{alt}" }
+            fields:
+              - { name: src, label: Изображение, type: image, required: true }
+              - { name: alt, label: Описание изображения, type: string, required: true }
           - name: directions
             label: Направления деятельности
             type: object
