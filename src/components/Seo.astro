@@ -1,0 +1,57 @@
+---
+import site from '../content/site.json';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+const home = Astro.site?.href;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const models = site.equipment.groups.flatMap((group) => group.models.map((model) => ({ model, group })));
+const catalog = {
+  '@type': 'ItemList',
+  ...(home ? { '@id': `${home}#equipment-catalog`, url: `${home}#equipment` } : {}),
+  name: site.equipment.title,
+  numberOfItems: models.length,
+  itemListElement: models.map(({ model, group }, index) => ({
+    '@type': 'ListItem', position: index + 1,
+    item: {
+      '@type': 'Product', name: model.title, model: model.title,
+      description: model.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
+      category: group.label,
+      manufacturer: { '@type': 'Organization', name: 'АО «Лимако»' },
+      ...(home ? { url: `${home}#equipment-model-${model.id}`, image: new URL(model.image, home).href } : {}),
+      additionalProperty: model.technicalSpecifications.map((spec) => ({ '@type': 'PropertyValue', name: spec.parameter, value: spec.value })),
+    },
+  })),
+};
+const graph = [
+  {
+    '@type': 'Organization',
+    ...(home ? { '@id': `${home}#organization`, url: home } : {}),
+    name: 'Комбит Про', legalName: 'ООО «Комбит Про»',
+    description: site.seo.description,
+    telephone: site.contact.phone.replace(/[^\d+]/g, ''), email: site.contact.email,
+    address: { '@type': 'PostalAddress', streetAddress: site.contact.address },
+  },
+  ...(home ? [
+    { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: 'Комбит Про', alternateName: 'ООО «Комбит Про»', inLanguage: 'ru-RU', publisher: { '@id': `${home}#organization` } },
+    { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: 'ru-RU', isPartOf: { '@id': `${home}#website` }, about: { '@id': `${home}#organization` }, mainEntity: { '@id': `${home}#equipment-catalog` } },
+  ] : []),
+  catalog,
+  ...site.services.items.filter((service) => service.description.replace(/<[^>]*>/g, '').trim()).map((service) => ({
+    '@type': 'Service', name: service.title,
+    description: service.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
+    ...(home ? { url: `${home}#services`, provider: { '@id': `${home}#organization` } } : { provider: { '@type': 'Organization', name: 'Комбит Про' } }),
+  })),
+];
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#003357" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+{canonical && <link rel="canonical" href={canonical} />}
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:site_name" content="Комбит Про" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonical && <meta property="og:url" content={canonical} />}
+<script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')} />
