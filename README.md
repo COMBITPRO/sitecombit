@@ -50,13 +50,13 @@ Pages CMS сохраняет форматирование в `src/content/site.j
 
 ## Основной хостинг — GitHub Pages
 
-Репозиторий: [COMBITPRO/sitecombit](https://github.com/COMBITPRO/sitecombit), ветка публикации: master. Основной адрес: https://kombit.pro/ (домен зарегистрирован в Рег.ру). Публикация рассчитана на публичный репозиторий; его видимость меняет владелец. Адрес https://combitpro.github.io/sitecombit/ — технический адрес Pages до подключения домена.
+Репозиторий: [CombitPro67/sitecombit](https://github.com/CombitPro67/sitecombit), ветка публикации: master. Основной адрес: https://kombit.pro/ (домен зарегистрирован в Рег.ру). Публикация рассчитана на публичный репозиторий; его видимость меняет владелец. Адрес https://combitpro67.github.io/sitecombit/ — технический адрес Pages до подключения домена.
 
 Автопубликация описана в [.github/workflows/pages.yml](.github/workflows/pages.yml). Workflow запускается после push в master и вручную через Actions → Deploy to GitHub Pages → Run workflow. Он устанавливает Node.js 22 и зависимости через npm ci, собирает сайт, проверяет SEO и локальные ресурсы, загружает dist и публикует проверенный артефакт. Изменения из Pages CMS проходят тот же процесс. Папку dist коммитить не нужно; ветка gh-pages не используется.
 
 ### Первое включение
 
-1. Перевести COMBITPRO/sitecombit в публичный режим. Для публичного репозитория GitHub Pages доступен на GitHub Free; дополнительных платных тарифов для размещения не требуется.
+1. Перевести CombitPro67/sitecombit в публичный режим. Для публичного репозитория GitHub Pages доступен на GitHub Free; дополнительных платных тарифов для размещения не требуется.
 2. В Settings → Pages → Build and deployment выбрать Source: GitHub Actions.
 3. В Settings → Secrets and variables → Actions → Variables добавить PUBLIC_FORMSPREE_ENDPOINT с endpoint существующей формы. Без него сайт публикуется, но отправка заявок отключена. Это публичный адрес, не секрет. Если в Formspree ограничены домены, разрешить kombit.pro и при необходимости www.kombit.pro.
 4. Подключить kombit.pro по инструкции ниже. SITE_URL можно не задавать: по умолчанию конфигурация и workflow используют https://kombit.pro/. Если repository variable SITE_URL уже существует, установить https://kombit.pro/ или удалить переопределение. Префикс ресурсов workflow получает из actions/configure-pages.
@@ -83,7 +83,7 @@ Remove-Item Env:SITE_URL, Env:SITE_BASE_PATH
 
 ### Подключение kombit.pro через Рег.ру
 
-1. В настройках организации COMBITPRO открыть Pages → Add a domain и добавить kombit.pro. GitHub покажет TXT-запись подтверждения владения: имя вида _github-pages-challenge-COMBITPRO и индивидуальное значение. Скопировать точные имя и значение из GitHub в DNS-зону, дождаться проверки и нажать Verify. TXT-запись после подтверждения сохранить. [Инструкция подтверждения](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
+1. В настройках аккаунта CombitPro67 открыть Pages → Add a domain и добавить kombit.pro. Подтверждение выполняется в настройках аккаунта, а не репозитория. GitHub покажет TXT-запись подтверждения владения: имя вида _github-pages-challenge-CombitPro67 и индивидуальное значение. Скопировать точные имя и значение из GitHub в DNS-зону, дождаться проверки и нажать Verify. TXT-запись после подтверждения сохранить. [Инструкция подтверждения](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
 2. В репозитории открыть Settings → Pages → Custom domain, указать kombit.pro и сохранить. Этот шаг выполнить до переключения A/CNAME-записей сайта.
 3. В Рег.ру открыть домен kombit.pro → DNS-серверы и управление зоной → Изменить и перейти к ресурсным записям. Этот интерфейс используется, если авторитетные DNS — ns1.reg.ru/ns2.reg.ru. Если домен делегирован другим DNS-серверам, записи нужно менять у действующего DNS-провайдера; менять NS для подключения к Pages не требуется.
 4. Установить записи ниже. Для @ заменить прежние A-записи сайта на четыре адреса GitHub. Старые AAAA, указывающие на другой хостинг, удалить или заменить адресами IPv6 из инструкции GitHub. Для www заменить конфликтующие A/AAAA/CNAME одной CNAME-записью. Сохранить MX и TXT почты, SPF, DKIM, DMARC и подтверждений владения. Домену не нужна CNAME-запись на @ и не нужен путь /sitecombit/ в DNS.
@@ -94,7 +94,7 @@ Remove-Item Env:SITE_URL, Env:SITE_BASE_PATH
 | A | @ | 185.199.109.153 |
 | A | @ | 185.199.110.153 |
 | A | @ | 185.199.111.153 |
-| CNAME | www | combitpro.github.io. |
+| CNAME | www | combitpro67.github.io. |
 
 Значения сверены с [инструкцией GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site). Работа с зоной: [инструкция Рег.ру](https://help.reg.ru/support/dns-servery-i-nastroyka-zony/nastroyka-resursnykh-zapisey-dns/nastroyka-resursnykh-zapisey-v-lichnom-kabinete).
 
@@ -128,7 +128,7 @@ Layero остаётся второстепенной копией из того 
 3. Добавить kombit.pro в Яндекс Вебмастер и Google Search Console, подтвердить права доступным для этого адреса способом и отправить sitemap и главную на обход.
 4. Указать основной адрес в карточке компании и официальных профилях.
 
-При адресе с /sitecombit/ файл robots.txt физически находится в /sitecombit/robots.txt. Поисковики читают robots.txt из корня домена; этот файл проекта не управляет всем доменом combitpro.github.io. Для этого адреса отправляйте карту сайта напрямую через поисковые кабинеты. На собственном домене файл будет доступен в корне как обычно.
+При адресе с /sitecombit/ файл robots.txt физически находится в /sitecombit/robots.txt. Поисковики читают robots.txt из корня домена; этот файл проекта не управляет всем доменом combitpro67.github.io. Для этого адреса отправляйте карту сайта напрямую через поисковые кабинеты. На собственном домене файл будет доступен в корне как обычно.
 
 Официальные инструкции: [Astro на GitHub Pages](https://docs.astro.build/en/guides/deploy/github/), [workflow GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages), [доступность и ограничения Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits).
 
