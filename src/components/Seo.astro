@@ -1,9 +1,10 @@
 ---
 import site from '../content/site.json';
+import { withBase } from '../lib/paths';
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
 const home = Astro.site?.href;
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const canonical = home;
 const models = site.equipment.groups.flatMap((group) => group.models.map((model) => ({ model, group })));
 const catalog = {
   '@type': 'ItemList',
@@ -17,7 +18,7 @@ const catalog = {
       description: model.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
       category: group.label,
       manufacturer: { '@type': 'Organization', name: 'АО «Лимако»' },
-      ...(home ? { url: `${home}#equipment-model-${model.id}`, image: new URL(model.image, home).href } : {}),
+      ...(home ? { url: `${home}#equipment-model-${model.id}`, image: new URL(model.image.replace(/^\//, ''), home).href } : {}),
       additionalProperty: model.technicalSpecifications.map((spec) => ({ '@type': 'PropertyValue', name: spec.parameter, value: spec.value })),
     },
   })),
@@ -46,7 +47,7 @@ const graph = [
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="theme-color" content="#003357" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 {canonical && <link rel="canonical" href={canonical} />}
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_RU" />

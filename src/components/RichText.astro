@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 interface Props {
   content: string;
   class?: string;
@@ -7,9 +8,10 @@ interface Props {
 
 const { content, class: className, as: Tag = 'div' } = Astro.props;
 const escapeHtml = (value: string) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-const html = content.trim().startsWith('<')
+const rawHtml = content.trim().startsWith('<')
   ? content
   : content.split(/\n{2,}/).map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`).join('');
+const html = rawHtml.replace(/\b(href|src)=(['"])(\/(?!\/)[^'"]*)\2/g, (_, attribute, quote, value) => `${attribute}=${quote}${withBase(value)}${quote}`);
 ---
 
 <Tag class:list={['rich-text-content', className]} set:html={html} />

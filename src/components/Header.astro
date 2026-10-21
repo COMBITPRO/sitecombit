@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import site from '../content/site.json';
+import site from '../content/site';
 
 const phoneHref = site.contact.phone.replace(/[^\d+]/g, '');
 const orderedModels = <T extends { featured?: boolean }>(models: T[] = []) => [...models].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
